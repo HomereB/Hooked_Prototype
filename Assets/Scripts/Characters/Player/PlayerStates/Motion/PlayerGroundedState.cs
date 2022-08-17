@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerBaseState, IRootState
 {
+    public PlayerGroundedState() : base()
+    {
+        IsRootState = true;
+    }
+
     public PlayerGroundedState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
         IsRootState = true;
@@ -10,11 +15,11 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     public override void CheckSwitchState()
     {
         if (Context.IsJumpPressed && Context.CanJump)
-            SwitchState(Manager.Jump());
+            SwitchState(Manager.GetState<PlayerJumpState>());
         else if (!Context.IsGrounded)
-            SwitchState(Manager.Fall());
+            SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-            SwitchState(Manager.Dash());
+            SwitchState(Manager.GetState<PlayerDashState>());
     }
 
     public override void EnterState()
@@ -31,11 +36,11 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     {
         if (Context.IsMovementPressed)
         {
-            SetSubState(Manager.Run());
+            SetSubState(Manager.GetState<PlayerRunState>());
         }
         else
         {
-            SetSubState(Manager.Idle());
+            SetSubState(Manager.GetState<PlayerIdleState>());
         }
     }
 

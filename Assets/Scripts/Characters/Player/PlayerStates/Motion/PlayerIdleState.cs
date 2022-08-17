@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
+    public PlayerIdleState() : base()
+    {
+    }
+
     public PlayerIdleState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
     }
@@ -9,7 +13,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void CheckSwitchState()
     {
         if (Context.IsMovementPressed)
-            SwitchState(Manager.Run());
+            SwitchState(Manager.GetState<PlayerRunState>());
     }
 
     public override void EnterState() {}

@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         dashManager.PlayerDashManagerSetup(playerDashData, this);
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
         playerStates = new PlayerStateManager(this);
-        currentState = playerStates.Grounded();
+        currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();
     }
 

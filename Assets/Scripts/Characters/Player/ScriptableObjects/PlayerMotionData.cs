@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMotionData : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+[CreateAssetMenu(fileName = "MotionData", menuName = "ScriptableObjects/Character/Player/Motion", order = 0)]
+public class PlayerMotionData : ScriptableObject
+{
+    public float playerSpeed;
 }

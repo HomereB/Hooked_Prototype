@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerBaseState, IRootState
 {
+    public PlayerDashState() : base()
+    {
+        IsRootState = true;
+    }
     public PlayerDashState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
         IsRootState = true;
@@ -13,11 +17,11 @@ public class PlayerDashState : PlayerBaseState, IRootState
         {
             if(Context.IsGrounded)
             {
-                SwitchState(Manager.Grounded());
+                SwitchState(Manager.GetState<PlayerGroundedState>());
             }
             else
             {
-                SwitchState(Manager.Fall());
+                SwitchState(Manager.GetState<PlayerFallState>());
             }
         }
     }

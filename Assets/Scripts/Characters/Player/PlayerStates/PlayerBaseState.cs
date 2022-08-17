@@ -12,10 +12,18 @@ public abstract class PlayerBaseState : BaseState
     protected PlayerController Context { get => context; set => context = value; }
     protected PlayerStateManager Manager { get => manager; set => manager = value; }
 
+    public PlayerBaseState() {}
+
     public PlayerBaseState(PlayerController currentContext,PlayerStateManager currentManager)
     {
         context = currentContext;
         manager = currentManager;
+    }
+
+    public void SetupState(PlayerController ctx, PlayerStateManager mngr)
+    {
+        context = ctx;
+        manager = mngr;
     }
 
     public abstract override void EnterState();

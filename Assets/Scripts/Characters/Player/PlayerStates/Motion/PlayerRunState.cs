@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class PlayerRunState : PlayerBaseState
 {
+    public PlayerRunState() : base()
+    {
+    }
     public PlayerRunState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {}
 
     public override void CheckSwitchState()
     {
         if (!Context.IsMovementPressed)
-            SwitchState(Manager.Idle());
+            SwitchState(Manager.GetState<PlayerIdleState>());
     }
 
     public override void EnterState()
