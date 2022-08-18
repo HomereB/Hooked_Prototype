@@ -11,7 +11,6 @@ public class PlayerStateManager
         context = currentContext;
     }
 
-
     public T GetState<T>() where T : PlayerBaseState, new()
     {
         string className = typeof(T).Name;
