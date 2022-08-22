@@ -33,13 +33,16 @@ public class PlayerDashState : PlayerBaseState, IRootState
         Context.MovementValue = Context.DashDirection * Context.playerDashData.dashSpeed;
         Context.JumpValue = Vector2.zero;
         ComputeGravity();
+        Context.PlayerAnimator.SetBool("isDashing",true);
+
     }
 
     public override void ExitState()
     {
         Context.CurrentDashTime = 0;
         Context.DashManager.CurrentDashCharges--;
-        if(Context.IsDashPressed)
+        Context.PlayerAnimator.SetBool("isDashing", false);
+        if (Context.IsDashPressed)
             Context.NeedNewDashPressed = true;
     }
 
