@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 1739562216}
   - component: {fileID: 1739562215}
   - component: {fileID: 1739562226}
+  - component: {fileID: 1739562223}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -633,6 +634,25 @@ MonoBehaviour:
   playerController: {fileID: 1739562220}
   crosshairDistance: 3
   crosshair: {fileID: 2141285921}
+--- !u!95 &1739562223
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739562214}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7a8bfe721e2ba95418ac0bc3e74b4038, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1739562226
 MonoBehaviour:
   m_ObjectHideFlags: 0

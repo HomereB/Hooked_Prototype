@@ -13,12 +13,18 @@ public class ComboManager : MonoBehaviour
     private static float currentComboStatMultiplier;
     [SerializeField]
     private static float comboStatMultiplier;
+    [SerializeField]
+    private static bool listeningForAttackInput;
     private static float maxStatMultiplier;
     private static float timeBeforeReset;
+
+    private static AttackType lastRegisteredAttackInput;
 
     public static float CurrentComboStatMultiplier { get => currentComboStatMultiplier; set => currentComboStatMultiplier = value; }
     public static int CurrentComboCount { get => currentComboCount; set => currentComboCount = value; }
     public static float ComboStatMultiplier { get => comboStatMultiplier; set => comboStatMultiplier = value; }
+    public static bool ListeningForAttackInput { get => listeningForAttackInput; set => listeningForAttackInput = value; }
+    public static AttackType LastRegisteredAttackInput { get => lastRegisteredAttackInput; set => lastRegisteredAttackInput = value; }
 
     private void Awake()
     {
@@ -58,6 +64,15 @@ public class ComboManager : MonoBehaviour
         if(timeBeforeReset <= 0f)
         {
             ResetCombo();
+        }
+
+    }
+
+    private void RegisterAttackInput(AttackType attackType)
+    {
+        if(listeningForAttackInput)
+        {
+            lastRegisteredAttackInput = attackType;
         }
     }
 

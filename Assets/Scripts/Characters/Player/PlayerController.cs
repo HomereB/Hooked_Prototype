@@ -71,6 +71,10 @@ public class PlayerController : MonoBehaviour
     private PlayerStateManager playerStates;
 
 
+    //Animation
+    private Animator playerAnimator; 
+
+
     //Get & Set
     public PlayerBaseState CurrentState { get => currentState; set => currentState = value; }
     public bool IsJumpPressed { get => isJumpPressed; set => isJumpPressed = value; }
@@ -103,6 +107,7 @@ public class PlayerController : MonoBehaviour
     public bool NeedNewDashPressed { get => dashManager.NeedNewDashPressed; set => dashManager.NeedNewDashPressed = value; }
     public PlayerDashManager DashManager { get => dashManager; set => dashManager = value; }
     public Vector3 Position { get => position; set => position = value; }
+    public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
 
 
     //Input events
@@ -167,8 +172,10 @@ public class PlayerController : MonoBehaviour
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
         dashManager = gameObject.AddComponent<PlayerDashManager>();
-        dashManager.PlayerDashManagerSetup(playerDashData, this);
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
+        playerAnimator = gameObject.GetComponent<Animator>();
+
+        dashManager.PlayerDashManagerSetup(playerDashData, this);
         playerStates = new PlayerStateManager(this);
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();
@@ -176,6 +183,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        
     }
 
     private void FixedUpdate()

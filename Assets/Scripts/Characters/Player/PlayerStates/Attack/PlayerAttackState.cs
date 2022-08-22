@@ -1,10 +1,25 @@
 using UnityEngine;
 
-public class PlayerAttackState : PlayerBaseState
+public class PlayerAttackState : PlayerBaseState,IRootState
 {
+    public PlayerAttackState() : base()
+    {
+        IsRootState = true;
+    }
+
+    public PlayerAttackState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
+    {
+        IsRootState = true;
+    }
+
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public void ComputeGravity()
+    {
+        Context.GravityValue = Vector2.zero;
     }
 
     public override void EnterState()
@@ -26,4 +41,6 @@ public class PlayerAttackState : PlayerBaseState
     {
         throw new System.NotImplementedException();
     }
+
+
 }

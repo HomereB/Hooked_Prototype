@@ -28,12 +28,17 @@ public class PlayerJumpState : PlayerBaseState, IRootState
         ComputeGravity();
         Context.JumpValue = Context.playerJumpData.initialJumpVelocity;
         Jump();
+        Context.PlayerAnimator.SetBool("isJumping", true);
+        Context.PlayerAnimator.SetInteger("JumpAmount", Context.CurrentJumpAmount);
+
     }
 
     public override void ExitState()
     {
         Context.CurrentJumpTime = 0;
-        if(Context.IsJumpPressed)
+        Context.PlayerAnimator.SetBool("isJumping", false);
+
+        if (Context.IsJumpPressed)
             Context.NeedNewJumpPressed = true;
     }
 

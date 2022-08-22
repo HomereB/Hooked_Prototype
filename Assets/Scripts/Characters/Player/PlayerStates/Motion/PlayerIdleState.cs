@@ -16,7 +16,10 @@ public class PlayerIdleState : PlayerBaseState
             SwitchState(Manager.GetState<PlayerRunState>());
     }
 
-    public override void EnterState() {}
+    public override void EnterState()
+    {
+        Context.PlayerAnimator.SetFloat("HorizontalSpeed", 0f);
+    }
 
     public override void ExitState() {}
 
@@ -26,7 +29,6 @@ public class PlayerIdleState : PlayerBaseState
     {
         //Add inertia?
         Context.MovementValue = Vector2.zero;
-
         CheckSwitchState();
     }
 }
