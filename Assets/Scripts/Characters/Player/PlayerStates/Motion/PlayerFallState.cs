@@ -14,12 +14,20 @@ public class PlayerFallState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if (Context.IsGrounded)
+        if (Context.IsHookPressed && Context.HookManager.hookStatus == HookStatus.Available)
+        {
+            SwitchState(Manager.GetState<PlayerHookStartupState>());
+            Context.CurrentJumpAmount--;
+        }
+        else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
         else if (Context.IsJumpPressed && Context.CanJump)
             SwitchState(Manager.GetState<PlayerJumpState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
+        {
             SwitchState(Manager.GetState<PlayerDashState>());
+            Context.CurrentJumpAmount--;
+        }
     }
 
     public override void EnterState()

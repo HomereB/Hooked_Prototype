@@ -11,8 +11,10 @@ public class PlayerController : MonoBehaviour
     //Managers
     //TODO : ComboManager
     private PlayerDashManager dashManager;
+    private PlayerHookManager hookManager;
     [SerializeField]
     private PlayerCrosshair playerCrosshair;
+    private HUDManager playerHUDManger;
 
 
     //Jump
@@ -21,11 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float currentJumpTime = 0;
     private bool needNewJumpPressed = false;
-
-
-    //Dash
-    private float currentDashTime;
-    private Vector2 dashDirection;
 
 
     //Input registration
@@ -58,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public PlayerJumpData playerJumpData;
     public PlayerGravityData playerGravityData;
     public PlayerDashData playerDashData;
+    public PlayerHookData playerHookData;
 
 
     //Movement computation elements
@@ -101,13 +99,13 @@ public class PlayerController : MonoBehaviour
     public Vector2 MovementValue { get => movementValue; set => movementValue = value; }
     public Vector2 JumpValue { get => jumpValue; set => jumpValue = value; }
     public float PlayerSpeed { get => playerSpeed; set => playerSpeed = value; }
-    public float CurrentDashTime { get => currentDashTime; set => currentDashTime = value; }
-    public Vector2 DashDirection { get => dashDirection; set => dashDirection = value; }
     public bool CanDash { get => dashManager.CanDash; }
     public bool NeedNewDashPressed { get => dashManager.NeedNewDashPressed; set => dashManager.NeedNewDashPressed = value; }
+    public bool NeedNewHookPressed { get => hookManager.NeedNewHookPressed; set => hookManager.NeedNewHookPressed = value; }
     public PlayerDashManager DashManager { get => dashManager; set => dashManager = value; }
     public Vector3 Position { get => position; set => position = value; }
     public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
+    public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
 
 
     //Input events
@@ -118,9 +116,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnCameraMove(InputAction.CallbackContext context)
     {
-        CameraInput = context.ReadValue<Vector2>();
+        cameraInput = context.ReadValue<Vector2>();
         playerCrosshair.Input = cameraInput;
-        Debug.Log(cameraInput.ToString("F5"));
+        //Debug.Log(cameraInput.ToString("F5"));
         //TODO : Handle mouse input + Fix jittering
     }
 
@@ -172,10 +170,12 @@ public class PlayerController : MonoBehaviour
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
         dashManager = gameObject.AddComponent<PlayerDashManager>();
+        hookManager = gameObject.GetComponentInChildren<PlayerHookManager>();
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
         playerAnimator = gameObject.GetComponent<Animator>();
 
         dashManager.PlayerDashManagerSetup(playerDashData, this);
+        hookManager.PlayerHookManagerSetup(playerHookData, this);
         playerStates = new PlayerStateManager(this);
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();

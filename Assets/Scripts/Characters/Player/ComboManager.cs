@@ -18,6 +18,7 @@ public class ComboManager : MonoBehaviour
     private static float maxStatMultiplier;
     private static float timeBeforeReset;
 
+    //Swap for state? input register in controller and bool to check if registering
     private static AttackType lastRegisteredAttackInput;
 
     public static float CurrentComboStatMultiplier { get => currentComboStatMultiplier; set => currentComboStatMultiplier = value; }

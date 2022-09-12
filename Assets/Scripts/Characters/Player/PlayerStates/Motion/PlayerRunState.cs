@@ -25,8 +25,9 @@ public class PlayerRunState : PlayerBaseState
 
     public override void UpdateState()
     {
-
         Context.MovementValue = Context.MovementInput * Context.PlayerSpeed * Time.deltaTime;
+        if ((Context.IsAgainstWallLeft && Context.MovementValue.x < 0) || (Context.IsAgainstWallRight && Context.MovementValue.x > 0))
+            Context.MovementValue = Vector2.zero;
         Context.PlayerAnimator.SetFloat("HorizontalSpeed", Mathf.Abs(Context.MovementInput.x));
         CheckSwitchState();
     }

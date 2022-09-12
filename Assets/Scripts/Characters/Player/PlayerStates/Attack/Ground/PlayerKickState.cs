@@ -1,19 +1,13 @@
 using UnityEngine;
 
-public class PlayerHookState : PlayerBaseState
+public class PlayerKickState : PlayerBaseState
 {
-    public PlayerHookState() : base()
-    {
-        IsRootState = true;
-    }
-    public PlayerHookState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
-    {
-        IsRootState = true;
-    }
-
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+/*        if(ComboManager.LastRegisteredAttackInput != null)
+        {
+
+        }*/
     }
 
     public override void EnterState()

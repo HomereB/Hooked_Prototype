@@ -34,7 +34,14 @@ public class PlayerAttackState : PlayerBaseState,IRootState
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
+        if(Context.IsPunchPressed)
+        { 
+            SetSubState(Manager.GetState<PlayerPunchState>());
+        }
+        else if(Context.IsKickPressed)
+        {
+            SetSubState(Manager.GetState<PlayerKickState>());
+        }
     }
 
     public override void UpdateState()

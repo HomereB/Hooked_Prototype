@@ -14,22 +14,23 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if (Context.IsJumpPressed && Context.CanJump)
+        if (Context.IsHookPressed && Context.HookManager.hookStatus == HookStatus.Available)
+            SwitchState(Manager.GetState<PlayerHookStartupState>());
+        else if (Context.IsJumpPressed && Context.CanJump)
             SwitchState(Manager.GetState<PlayerJumpState>());
         else if (!Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-            SwitchState(Manager.GetState<PlayerDashState>());
+            SwitchState(Manager.GetState<PlayerDashState>());        
     }
 
     public override void EnterState()
     {
         Context.CurrentJumpAmount = 0;
         Context.JumpValue = Vector2.zero;
-        InitializeSubState();
         ComputeGravity();
+        InitializeSubState();
         Context.PlayerAnimator.SetBool("isGrounded", true);
-
     }
 
     public override void ExitState()

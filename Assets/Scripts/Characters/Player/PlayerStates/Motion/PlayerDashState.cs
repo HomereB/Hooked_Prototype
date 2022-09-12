@@ -13,7 +13,7 @@ public class PlayerDashState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(Context.CurrentDashTime > Context.playerDashData.maxDashTime || (Context.CurrentDashTime > Context.playerDashData.minDashTime && !Context.IsDashPressed))
+        if(Context.DashManager.CurrentDashTime > Context.playerDashData.maxDashTime || (Context.DashManager.CurrentDashTime > Context.playerDashData.minDashTime && !Context.IsDashPressed))
         {
             if(Context.IsGrounded)
             {
@@ -28,18 +28,16 @@ public class PlayerDashState : PlayerBaseState, IRootState
 
     public override void EnterState()
     {
-        InitializeSubState();
-        Context.DashDirection = Context.MovementInput;
-        Context.MovementValue = Context.DashDirection * Context.playerDashData.dashSpeed;
+        Context.DashManager.DashDirection = Context.MovementInput;
+        Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
         Context.JumpValue = Vector2.zero;
         ComputeGravity();
         Context.PlayerAnimator.SetBool("isDashing",true);
-
     }
 
     public override void ExitState()
     {
-        Context.CurrentDashTime = 0;
+        Context.DashManager.CurrentDashTime = 0;
         Context.DashManager.CurrentDashCharges--;
         Context.PlayerAnimator.SetBool("isDashing", false);
         if (Context.IsDashPressed)
@@ -50,10 +48,10 @@ public class PlayerDashState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        Context.CurrentDashTime += Time.deltaTime;
-        if(Context.CurrentDashTime < Context.playerDashData.minDashTime || (Context.CurrentDashTime < Context.playerDashData.maxDashTime && Context.IsDashPressed))
+        Context.DashManager.CurrentDashTime += Time.deltaTime;
+        if(Context.DashManager.CurrentDashTime < Context.playerDashData.minDashTime || (Context.DashManager.CurrentDashTime < Context.playerDashData.maxDashTime && Context.IsDashPressed))
         {
-            Context.MovementValue = Context.DashDirection * Context.playerDashData.dashSpeed;
+            Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
         }
         CheckSwitchState();       
     }
