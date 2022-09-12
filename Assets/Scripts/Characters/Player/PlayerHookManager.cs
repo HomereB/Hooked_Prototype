@@ -68,9 +68,9 @@ public class PlayerHookManager : MonoBehaviour
         hookStatus = HookStatus.Travel;
         Vector3 travelVector = hitPosition - playerController.Position;
         RaycastHit2D hit = Physics2D.Raycast(playerController.Position, travelVector, travelVector.magnitude, playerHookData.hookLayerMask);
-        Debug.Log(hit.point);
         Debug.DrawRay(playerController.Position, HookDirection * 10f, Color.green, 5);
-        hitPosition = hit.point;
+        if(hit.point!=Vector2.zero)
+            hitPosition = hit.point;
         transform.position = hitPosition/* -  HookDirection * 0.15f*/;
     }
 
@@ -81,7 +81,7 @@ public class PlayerHookManager : MonoBehaviour
         ropeRenderer.enabled = false;
         hookRenderer.enabled = false;
         gameObject.transform.position = playerController.Position;
-        currentCooldownTimer = cooldown;
+        currentCooldownTimer = playerHookData.hookCooldown - cooldown;
     }
 
     // Update is called once per frame
@@ -96,6 +96,8 @@ public class PlayerHookManager : MonoBehaviour
             if (currentCooldownTimer > playerHookData.hookCooldown)
             {
                 hookStatus = HookStatus.Available;
+                if (playerController.IsHookPressed)
+                    NeedNewHookPressed = true;
             }
         }
     }

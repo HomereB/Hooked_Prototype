@@ -15,10 +15,9 @@ MonoBehaviour:
   hookLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  maxHookDistance: 5
+  maxHookDistance: 6
   cutoffDistance: 0.9
-  hookSpeed: 60
   travelTime: 0.3
-  travelSpeed: 3000
+  playerTravelSpeed: 3000
   hookCooldown: 5
   hookCooldownRefundOnMiss: 2

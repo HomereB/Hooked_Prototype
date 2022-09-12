@@ -14,7 +14,7 @@ public class PlayerFallState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if (Context.IsHookPressed && Context.HookManager.hookStatus == HookStatus.Available)
+        if (Context.IsHookPressed && Context.HookManager.CanStartHook)
         {
             SwitchState(Manager.GetState<PlayerHookStartupState>());
             Context.CurrentJumpAmount--;

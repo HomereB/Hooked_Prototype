@@ -12,11 +12,9 @@ public class PlayerHookData : ScriptableObject
     [SerializeField]
     public float cutoffDistance;
     [SerializeField]
-    public float hookSpeed;
-    [SerializeField]
     public float travelTime;
     [SerializeField]
-    public float travelSpeed;
+    public float playerTravelSpeed;
     [SerializeField]
     public float hookCooldown;
     [SerializeField]

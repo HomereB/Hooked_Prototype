@@ -54,11 +54,11 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        //Debug.Log(Context.HookManager.HookDirection);
         if (Context.HookManager.CurrentTravelTimer < Context.playerHookData.travelTime)
         {
             Context.HookManager.CurrentTravelTimer += Time.deltaTime;
-            Context.HookManager.transform.position += Context.HookManager.HookDirection * Context.playerHookData.hookSpeed * Time.deltaTime;
+            float speed = Context.playerHookData.maxHookDistance / Context.playerHookData.travelTime;
+            Context.HookManager.transform.position += Context.HookManager.HookDirection * speed * Time.deltaTime;
         }
         else
         {

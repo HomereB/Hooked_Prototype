@@ -31,12 +31,12 @@ public class PlayerHookTravelState : PlayerBaseState, IRootState
 
     public override void EnterState()
     {
-        //Debug.Log("hook_travel_enter");
     }
+    
 
     public override void ExitState() 
     {
-        //Debug.Log("hook_travel_exit");
+        Context.HookManager.EndHook(Context.playerHookData.hookCooldown);
         if (Context.IsHookPressed)
             Context.NeedNewHookPressed = true;
     }
@@ -45,11 +45,10 @@ public class PlayerHookTravelState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        //Debug.Log(Vector3.Distance(Context.HookManager.HitPosition, Context.Position));
         if (Vector3.Distance(Context.HookManager.HitPosition,Context.Position) > Context.playerHookData.cutoffDistance)
         {
             Vector2 movementDirection = new Vector2(Context.HookManager.HookDirection.x, Context.HookManager.HookDirection.y);
-            Context.MovementValue = movementDirection * Context.playerHookData.travelSpeed * Time.deltaTime;
+            Context.MovementValue = movementDirection * Context.playerHookData.playerTravelSpeed * Time.deltaTime;
         }
         else
         {

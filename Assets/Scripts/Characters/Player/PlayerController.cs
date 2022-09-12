@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour
     public void OnHook(InputAction.CallbackContext context)
     {
         isHookPressed = context.action.triggered;
+        hookManager.NeedNewHookPressed = false;
+
     }
 
     public void OnThrow(InputAction.CallbackContext context)
