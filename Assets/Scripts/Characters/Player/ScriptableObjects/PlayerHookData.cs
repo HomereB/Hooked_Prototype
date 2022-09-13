@@ -18,5 +18,5 @@ public class PlayerHookData : ScriptableObject
     [SerializeField]
     public float hookCooldown;
     [SerializeField]
-    public float hookCooldownRefundOnMiss;
+    public float hookCooldownOnMiss;
 }

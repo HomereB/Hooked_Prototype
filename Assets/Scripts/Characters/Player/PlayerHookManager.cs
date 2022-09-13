@@ -28,6 +28,7 @@ public class PlayerHookManager : MonoBehaviour
     public float CurrentTravelTimer { get => currentTravelTimer; set => currentTravelTimer = value; }
     public Vector3 HitPosition { get => hitPosition; set => hitPosition = value; }
     public Vector3 HookDirection { get => hookDirection; set => hookDirection = value; }
+    public float CurrentCooldownTimer { get => currentCooldownTimer; set => currentCooldownTimer = value; }
 
     // Start is called before the first frame update
     void Start()

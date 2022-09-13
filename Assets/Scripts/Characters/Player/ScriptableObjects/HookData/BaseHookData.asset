@@ -19,5 +19,5 @@ MonoBehaviour:
   cutoffDistance: 0.9
   travelTime: 0.3
   playerTravelSpeed: 3000
-  hookCooldown: 5
-  hookCooldownRefundOnMiss: 2
+  hookCooldown: 3
+  hookCooldownOnMiss: 1

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class EntityHealthManager : MonoBehaviour
 {
     private int currentHealth;
+    private int maxHealthReplenish;
     [SerializeField]
     private int maxHealth;
 

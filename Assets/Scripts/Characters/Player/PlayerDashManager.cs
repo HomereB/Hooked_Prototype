@@ -7,7 +7,6 @@ public class PlayerDashManager : MonoBehaviour
     private PlayerDashData playerDashData;
     private PlayerController playerController;
 
-
     [SerializeField]
     private bool needNewDashPressed;
     [SerializeField]
@@ -23,6 +22,7 @@ public class PlayerDashManager : MonoBehaviour
     public int CurrentDashCharges { get => currentDashCharges; set => currentDashCharges = value; }
     public float CurrentDashTime { get => currentDashTime; set => currentDashTime = value; }
     public Vector2 DashDirection { get => dashDirection; set => dashDirection = value; }
+    public float CurrentCooldownTimer { get => currentCooldownTimer; set => currentCooldownTimer = value; }
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class PlayerDashManager : MonoBehaviour
         if(currentDashCharges < playerDashData.maxDashCharges)
         {
             currentCooldownTimer += Time.deltaTime;
-            if(currentCooldownTimer>playerDashData.dashCooldown)
+            if(currentCooldownTimer > playerDashData.dashCooldown)
             {
                 currentCooldownTimer = 0;
                 currentDashCharges++;

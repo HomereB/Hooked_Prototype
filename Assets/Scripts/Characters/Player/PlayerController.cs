@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     private PlayerHookManager hookManager;
     [SerializeField]
     private PlayerCrosshair playerCrosshair;
-    private HUDManager playerHUDManger;
+    [SerializeField]
+    private HUDManager playerHUDManager;
 
 
     //Jump
@@ -181,6 +182,8 @@ public class PlayerController : MonoBehaviour
         playerStates = new PlayerStateManager(this);
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();
+
+        playerHUDManager.PlayerController = this;
     }
 
     private void Update()
@@ -193,5 +196,6 @@ public class PlayerController : MonoBehaviour
         currentState.UpdateStates();
         gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue;
         position = gameObject.transform.position;
+        playerHUDManager.UpdateUI();
     }
 }

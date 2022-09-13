@@ -23,7 +23,7 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
         }
         else if(Context.HookManager.hookStatus == HookStatus.Cooldown)
         {
-            Context.HookManager.EndHook(Context.playerHookData.hookCooldownRefundOnMiss);
+            Context.HookManager.EndHook(Context.playerHookData.hookCooldownOnMiss);
             if (Context.IsGrounded)
             {
                 SwitchState(Manager.GetState<PlayerGroundedState>());
