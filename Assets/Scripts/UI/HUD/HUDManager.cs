@@ -17,8 +17,6 @@ public class HUDManager : MonoBehaviour
 
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
 
-    //Create UI template : SimpleBar / MultipleBar / Circle / Other
-
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +31,9 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        //healthBar.Fill(playerController.playerHealthManager.getHealthPercentage);
-        dashIndicators.FillGauge(playerController.DashManager.DashPercentage);
-        hookIndicator.FillGauge(playerController.HookManager.HookPercentage);
-        specialBars.FillGauge(playerController.SpecialManager.SpecialPercentage);
+        healthBar.FillGauge(playerController.HealthManager.HealthPercentage,true,true);
+        dashIndicators.FillGauge(playerController.DashManager.DashPercentage,true,true);
+        hookIndicator.FillGauge(playerController.HookManager.HookPercentage,true,true);
+        specialBars.FillGauge(playerController.SpecialManager.SpecialPercentage,true,true);
     }
 }

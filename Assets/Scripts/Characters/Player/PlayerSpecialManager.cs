@@ -19,8 +19,9 @@ public class PlayerSpecialManager : MonoBehaviour
 
     public bool CanConsumeSpecial { get => currentSpecialCharge > playerSpecialData.ChargeValue; }
 
-    public void SpecialCharge(float value)
+    public void AddToCurrentCharge(float value)
     {
+        currentSpecialCharge += value;
         currentSpecialCharge = Mathf.Clamp(currentSpecialCharge, 0f, playerSpecialData.MaxSpecialValue);
     }
 

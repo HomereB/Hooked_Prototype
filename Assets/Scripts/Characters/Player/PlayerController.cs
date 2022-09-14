@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerDashManager dashManager;
     private PlayerHookManager hookManager;
     private PlayerSpecialManager specialManager;
+    private EntityHealthManager healthManager;
     [SerializeField]
     private HUDManager playerHUDManager;
 
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
 
     //Data from Scriptable objects
+    public PlayerHealthData playerHealthData;
     public PlayerJumpData playerJumpData;
     public PlayerGravityData playerGravityData;
     public PlayerDashData playerDashData;
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
     public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
     public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
     public PlayerSpecialManager SpecialManager { get => specialManager; set => specialManager = value; }
+    public EntityHealthManager HealthManager { get => healthManager; set => healthManager = value; }
 
 
     //Input events
@@ -180,10 +183,11 @@ public class PlayerController : MonoBehaviour
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
 
+        healthManager = gameObject.AddComponent<EntityHealthManager>();
         dashManager = gameObject.AddComponent<PlayerDashManager>();
-        hookManager = gameObject.GetComponentInChildren<PlayerHookManager>();
         specialManager = gameObject.AddComponent<PlayerSpecialManager>();
 
+        hookManager = gameObject.GetComponentInChildren<PlayerHookManager>();
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
         
         playerAnimator = gameObject.GetComponent<Animator>();
@@ -194,6 +198,9 @@ public class PlayerController : MonoBehaviour
         dashManager.PlayerDashManagerSetup(playerDashData, this);
         hookManager.PlayerHookManagerSetup(playerHookData, this);
         specialManager.PlayerSpecialManagerSetup(playerSpecialData, this);
+        //Debug.Log(healthManager);
+        healthManager.SetupHealthManager(playerHealthData);
+
 
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();

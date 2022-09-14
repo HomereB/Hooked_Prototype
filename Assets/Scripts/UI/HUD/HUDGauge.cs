@@ -12,31 +12,53 @@ public class HUDGauge : MonoBehaviour
     public List<Image> gaugeImages;
     public List<Image> gaugeFramesImages;
     public List<Image> gaugeUpdateImages;
-    private TMP_Text barText;
+    public TMP_Text barText;
 
     //public Animator gaugeAnimator;
-
+    bool isDisplayed = true;
     // Update is called once per frame
     void Update()
     {
 /*        if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            float p = Random.Range(0f, gaugeImages.Count);
-            Debug.Log(p);
-            FillGauge(p);
+            float p = Random.Range(0f, 3f);
+            FillGauge(p,true,true);
+            UpdateGaugeText(p.ToString());
+            isDisplayed = !isDisplayed;
+            DisplayText(isDisplayed);
         }*/
     }
 
-    public void FillGauge(float percentage)
+    public void FillGauge(float percentage,bool fillGauge,bool fillBackground)
     {
-        for(int i = 0; i < gaugeImages.Count; i++)
+        if(fillGauge)
+            Fill(gaugeImages, percentage);
+        if(fillBackground)
+            Fill(gaugeUpdateImages, percentage);
+    }
+
+    private void Fill(List<Image> gauges, float percentage)
+    {
+        for (int i = 0; i < gauges.Count; i++)
         {
-            if(percentage >= i + 1)
-                gaugeImages[i].fillAmount = 1;
+            if (percentage >= i + 1)
+                gauges[i].fillAmount = 1;
             else if (percentage < i + 1 && percentage > i)
-                gaugeImages[i].fillAmount = percentage - i;
+                gauges[i].fillAmount = percentage - i;
             else
-                gaugeImages[i].fillAmount = 0;
+                gauges[i].fillAmount = 0;
         }
+    }
+
+    public void DisplayText(bool isDisplayed)
+    {
+        if(barText != null)
+            barText.enabled = isDisplayed;
+    }
+
+    public void UpdateGaugeText(string newText)
+    {
+        if (barText != null)
+            barText.text = newText;
     }
 }

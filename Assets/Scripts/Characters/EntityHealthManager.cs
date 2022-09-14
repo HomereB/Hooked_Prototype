@@ -2,31 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EntityHealthManager : MonoBehaviour
+public class EntityHealthManager : MonoBehaviour
 {
-    private int currentHealth;
-    private int maxHealthReplenish;
+    private float currentHealth;
+    private CharacterHealthData characterHealthData;
     [SerializeField]
-    private int maxHealth;
 
-    private HealthBar healthBar;
-
-    public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
-    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public float HealthPercentage{ get => currentHealth / characterHealthData.maxHealth; }
 
     public void AddToCurrentHealth(int value)
     {
         currentHealth += value;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        if(healthBar != null)
-        {
-            healthBar.Fill(GetHealthPercentage());
-        }
+        currentHealth = Mathf.Clamp(currentHealth, 0, characterHealthData.maxHealth);
     }
 
-    public float GetHealthPercentage()
+    public void SetupHealthManager(PlayerHealthData healthData)
     {
-        return (float) currentHealth / maxHealth;
+        characterHealthData = healthData;
+        currentHealth = healthData.maxHealth;
     }
 }
