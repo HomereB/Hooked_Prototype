@@ -53,6 +53,8 @@ public class PlayerHookManager : MonoBehaviour
         ropeRenderer.enabled = true;
         hookRenderer.enabled = true;
         hookCollider.enabled = true;
+        playerController.PlayerAnimator.SetTrigger("HookThrown");
+
         GetComponent<Rigidbody2D>().WakeUp();
         hookCollider.transform.position = playerController.Position;
         hookDirection = playerController.CameraInput;
@@ -67,6 +69,7 @@ public class PlayerHookManager : MonoBehaviour
         hookCollider.enabled = false;
         GetComponent<Rigidbody2D>().Sleep();
         hookStatus = HookStatus.Travel;
+        playerController.PlayerAnimator.SetTrigger("HookHit");
         Vector3 travelVector = hitPosition - playerController.Position;
         RaycastHit2D hit = Physics2D.Raycast(playerController.Position, travelVector, travelVector.magnitude, playerHookData.hookLayerMask);
         Debug.DrawRay(playerController.Position, HookDirection * 10f, Color.green, 5);
@@ -83,6 +86,7 @@ public class PlayerHookManager : MonoBehaviour
         hookRenderer.enabled = false;
         gameObject.transform.position = playerController.Position;
         currentCooldownTimer = playerHookData.hookCooldown - cooldown;
+        playerController.PlayerAnimator.SetTrigger("HookEnd");
     }
 
     // Update is called once per frame

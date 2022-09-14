@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922641379d1824d4bbc69fa96b3cd22a, type: 3}
   m_Name: BaseSpecialData
   m_EditorClassIdentifier: 
-  initialSpecialValue: 300
+  initialSpecialValue: 168
   MaxSpecialValue: 300
   maxChargeAmount: 3
   regenOverTime: 0
