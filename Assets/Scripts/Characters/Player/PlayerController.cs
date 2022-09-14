@@ -5,17 +5,21 @@ public class PlayerController : MonoBehaviour
 {
     //Base Motion
     [SerializeField]
-    private float playerSpeed = 2f;
-    private Vector3 position;
+    private float playerSpeed = 2f; //TODO : use player motion data
+
 
     //Managers
-    //TODO : ComboManager
+    //TODO : Health Manager / ComboManager
     private PlayerDashManager dashManager;
     private PlayerHookManager hookManager;
-    [SerializeField]
-    private PlayerCrosshair playerCrosshair;
+    private PlayerSpecialManager specialManager;
     [SerializeField]
     private HUDManager playerHUDManager;
+
+
+    //Crosshair
+    [SerializeField]
+    private PlayerCrosshair playerCrosshair;
 
 
     //Jump
@@ -57,6 +61,7 @@ public class PlayerController : MonoBehaviour
     public PlayerGravityData playerGravityData;
     public PlayerDashData playerDashData;
     public PlayerHookData playerHookData;
+    public PlayerSpecialData playerSpecialData;
 
 
     //Movement computation elements
@@ -71,10 +76,10 @@ public class PlayerController : MonoBehaviour
 
 
     //Animation
-    private Animator playerAnimator; 
+    private Animator playerAnimator;
 
 
-    //Get & Set
+    //Get & Set (TODO : sort a bit...)
     public PlayerBaseState CurrentState { get => currentState; set => currentState = value; }
     public bool IsJumpPressed { get => isJumpPressed; set => isJumpPressed = value; }
     public bool IsDashPressed { get => isDashPressed; set => isDashPressed = value; }
@@ -104,9 +109,10 @@ public class PlayerController : MonoBehaviour
     public bool NeedNewDashPressed { get => dashManager.NeedNewDashPressed; set => dashManager.NeedNewDashPressed = value; }
     public bool NeedNewHookPressed { get => hookManager.NeedNewHookPressed; set => hookManager.NeedNewHookPressed = value; }
     public PlayerDashManager DashManager { get => dashManager; set => dashManager = value; }
-    public Vector3 Position { get => position; set => position = value; }
+    public Vector3 Position { get => gameObject.transform.position; }
     public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
     public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
+    public PlayerSpecialManager SpecialManager { get => specialManager; set => specialManager = value; }
 
 
     //Input events
@@ -170,16 +176,25 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        //Instantiate & Get
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
+
         dashManager = gameObject.AddComponent<PlayerDashManager>();
         hookManager = gameObject.GetComponentInChildren<PlayerHookManager>();
+        specialManager = gameObject.AddComponent<PlayerSpecialManager>();
+
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
+        
         playerAnimator = gameObject.GetComponent<Animator>();
 
+        playerStates = new PlayerStateManager(this);
+
+        //Setup & Init
         dashManager.PlayerDashManagerSetup(playerDashData, this);
         hookManager.PlayerHookManagerSetup(playerHookData, this);
-        playerStates = new PlayerStateManager(this);
+        specialManager.PlayerSpecialManagerSetup(playerSpecialData, this);
+
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();
 
@@ -193,9 +208,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //FSM logic
         currentState.UpdateStates();
-        gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue;
-        position = gameObject.transform.position;
+        //Movement 
+        gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue; //TODO : use movement computation
+    }
+
+    private void LateUpdate()
+    {
+        //UI update
         playerHUDManager.UpdateUI();
     }
 }

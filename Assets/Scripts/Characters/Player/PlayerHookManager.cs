@@ -29,7 +29,7 @@ public class PlayerHookManager : MonoBehaviour
     public Vector3 HitPosition { get => hitPosition; set => hitPosition = value; }
     public Vector3 HookDirection { get => hookDirection; set => hookDirection = value; }
     public float CurrentCooldownTimer { get => currentCooldownTimer; set => currentCooldownTimer = value; }
-
+    public float HookPercentage { get => CurrentCooldownTimer / playerHookData.hookCooldown; }
     // Start is called before the first frame update
     void Start()
     {

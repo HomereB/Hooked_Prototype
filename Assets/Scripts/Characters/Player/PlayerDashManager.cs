@@ -23,6 +23,7 @@ public class PlayerDashManager : MonoBehaviour
     public float CurrentDashTime { get => currentDashTime; set => currentDashTime = value; }
     public Vector2 DashDirection { get => dashDirection; set => dashDirection = value; }
     public float CurrentCooldownTimer { get => currentCooldownTimer; set => currentCooldownTimer = value; }
+    public float DashPercentage { get =>  CurrentDashCharges + CurrentCooldownTimer / playerDashData.dashCooldown; }
 
     private void Start()
     {

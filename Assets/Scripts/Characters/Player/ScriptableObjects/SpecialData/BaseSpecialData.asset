@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922641379d1824d4bbc69fa96b3cd22a, type: 3}
+  m_Name: BaseSpecialData
+  m_EditorClassIdentifier: 
+  initialSpecialValue: 300
+  MaxSpecialValue: 300
+  maxChargeAmount: 3
+  regenOverTime: 0
+  costMultiplicator: 1
+  regenPerHit: 10

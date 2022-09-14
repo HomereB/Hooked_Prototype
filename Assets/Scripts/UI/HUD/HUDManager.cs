@@ -33,12 +33,9 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        //healthBar.Fill(playerController.playerHealthManager.currentHealth / playerController.HookManager.maxHealth);
-        dashIndicators.FillGauge(playerController.DashManager.CurrentDashCharges 
-            + playerController.DashManager.CurrentCooldownTimer / playerController.playerDashData.dashCooldown);
-
-        Debug.Log(playerController.DashManager.CurrentDashCharges
-            + playerController.DashManager.CurrentCooldownTimer / playerController.playerDashData.dashCooldown);
-        hookIndicator.FillGauge(playerController.HookManager.CurrentCooldownTimer / playerController.playerHookData.hookCooldown);
+        //healthBar.Fill(playerController.playerHealthManager.getHealthPercentage);
+        dashIndicators.FillGauge(playerController.DashManager.DashPercentage);
+        hookIndicator.FillGauge(playerController.HookManager.HookPercentage);
+        specialBars.FillGauge(playerController.SpecialManager.SpecialPercentage);
     }
 }

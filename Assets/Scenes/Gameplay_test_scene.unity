@@ -2433,6 +2433,7 @@ MonoBehaviour:
   playerGravityData: {fileID: 11400000, guid: 62690ee044611164d91ff43896dba774, type: 2}
   playerDashData: {fileID: 11400000, guid: 18cb03c118971e549954580bc7bf6f34, type: 2}
   playerHookData: {fileID: 11400000, guid: f9564dd74ddda98468f0489fff7eb1f4, type: 2}
+  playerSpecialData: {fileID: 11400000, guid: 1bdec29d14267fc48a3b4a779c1728e5, type: 2}
 --- !u!114 &1739562221
 MonoBehaviour:
   m_ObjectHideFlags: 0

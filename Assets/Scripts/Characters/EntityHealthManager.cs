@@ -14,6 +14,7 @@ public abstract class EntityHealthManager : MonoBehaviour
     public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
+
     public void AddToCurrentHealth(int value)
     {
         currentHealth += value;
