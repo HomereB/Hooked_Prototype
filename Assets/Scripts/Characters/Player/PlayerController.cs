@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerDashManager dashManager;
     private PlayerHookManager hookManager;
     private PlayerSpecialManager specialManager;
-    private EntityHealthManager healthManager;
+    private PlayerHealthManager healthManager;
     [SerializeField]
     private HUDManager playerHUDManager;
 
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
     public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
     public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
     public PlayerSpecialManager SpecialManager { get => specialManager; set => specialManager = value; }
-    public EntityHealthManager HealthManager { get => healthManager; set => healthManager = value; }
+    public PlayerHealthManager HealthManager { get => healthManager; set => healthManager = value; }
 
 
     //Input events
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
 
-        healthManager = gameObject.AddComponent<EntityHealthManager>();
+        healthManager = gameObject.AddComponent<PlayerHealthManager>();
         dashManager = gameObject.AddComponent<PlayerDashManager>();
         specialManager = gameObject.AddComponent<PlayerSpecialManager>();
 
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
         hookManager.PlayerHookManagerSetup(playerHookData, this);
         specialManager.PlayerSpecialManagerSetup(playerSpecialData, this);
         //Debug.Log(healthManager);
-        healthManager.SetupHealthManager(playerHealthData);
+        healthManager.SetupHealthManager(playerHealthData, this);
 
 
         currentState = playerStates.GetState<PlayerGroundedState>();
@@ -217,6 +217,7 @@ public class PlayerController : MonoBehaviour
     {
         //FSM logic
         currentState.UpdateStates();
+        Debug.Log(currentState);
         //Movement 
         gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue; //TODO : use movement computation
     }

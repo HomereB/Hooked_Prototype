@@ -31,7 +31,8 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        healthBar.FillGauge(playerController.HealthManager.HealthPercentage,true,true);
+        healthBar.FillGauge(playerController.HealthManager.HealthPercentage,true,false);
+        healthBar.FillGauge(playerController.HealthManager.RegainableHealthPercentage, false, true);
         dashIndicators.FillGauge(playerController.DashManager.DashPercentage,true,true);
         hookIndicator.FillGauge(playerController.HookManager.HookPercentage,true,true);
         specialBars.FillGauge(playerController.SpecialManager.SpecialPercentage,true,true);

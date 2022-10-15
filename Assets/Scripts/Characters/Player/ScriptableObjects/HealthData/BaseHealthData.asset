@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: BaseHealthData
   m_EditorClassIdentifier: 
   maxHealth: 300
-  timeBeforeCompleteLoss: 3
+  regainableHealthLossRate: 1
+  regainableHealthTimeLossBegin: 1.5
   damagePercentageRegen: 10

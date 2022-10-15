@@ -7,7 +7,9 @@ using UnityEngine;
 public class PlayerHealthData : CharacterHealthData
 {
     [SerializeField]
-    public float timeBeforeCompleteLoss;
+    public float regainableHealthLossRate;
+    [SerializeField]
+    public float regainableHealthTimeLossBegin;
     [SerializeField]
     public float damagePercentageRegen;
 }
