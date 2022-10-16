@@ -25,6 +25,7 @@ public class PlayerHealthManager : EntityHealthManager
     public override void AddToCurrentHealth(int value)
     {
         base.AddToCurrentHealth(value);
+        currentHealthRegainable = (currentHealthRegainable - value < 0) ? 0 : currentHealthRegainable - value;
     }
 
     public override void Damage(int value)

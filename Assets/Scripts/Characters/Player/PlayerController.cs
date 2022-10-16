@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHitable
 {
     //Base Motion
     [SerializeField]
@@ -226,5 +226,10 @@ public class PlayerController : MonoBehaviour
     {
         //UI update
         playerHUDManager.UpdateUI();
+    }
+
+    public void Hit()
+    {
+        throw new System.NotImplementedException();
     }
 }
