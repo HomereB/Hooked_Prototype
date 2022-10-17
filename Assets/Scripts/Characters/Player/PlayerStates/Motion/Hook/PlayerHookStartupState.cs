@@ -17,7 +17,9 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(Context.HookManager.hookStatus == HookStatus.Travel)
+        if (Context.IsStunned || Context.IsDowned)
+            SwitchState(Manager.GetState<PlayerImpairedState>());
+        else if (Context.HookManager.hookStatus == HookStatus.Travel)
         {
             SwitchState(Manager.GetState<PlayerHookTravelState>());
         }

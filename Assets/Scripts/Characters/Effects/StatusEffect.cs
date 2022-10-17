@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class StatusEffect : MonoBehaviour
 {
-    protected float effectDuration;
+    protected EffectData effectData;
 
     public abstract void ApplyEffect();
     public abstract void RemoveEffect();
     public abstract void HandleEffect();
+    public abstract void StackEffect(StatusEffect effect);
 }

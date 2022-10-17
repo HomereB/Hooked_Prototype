@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IHitable
+public class PlayerController : EntityController, IHitable
 {
     //Base Motion
     [SerializeField]
-    private float playerSpeed = 2f; //TODO : use player motion data
+    private float playerSpeed = 2f; //TODO : use player motion data + move behaviour
 
 
     //Managers
-    //TODO : Health Manager / ComboManager
+    //TODO : ComboManager
     private PlayerDashManager dashManager;
     private PlayerHookManager hookManager;
     private PlayerSpecialManager specialManager;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour, IHitable
     private PlayerCrosshair playerCrosshair;
 
 
-    //Jump
+    //Jump //TODO : move logic in a jump behaviour
     [SerializeField]
     private int currentJumpAmount = 0;
     [SerializeField]
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour, IHitable
     private bool isGrabPressed = false;
     private bool isHookPressed = false;
     private bool isSpecialPressed = false;
+    private bool isStunned = false; //TODO? : move in stun effect
+    private float stunTimer = 0f;
+    private bool isDowned = false;
     
     
     //Player Input Map
@@ -70,6 +74,7 @@ public class PlayerController : MonoBehaviour, IHitable
     private Vector2 gravityValue = Vector2.zero;
     private Vector2 movementValue = Vector2.zero;
     private Vector2 jumpValue = Vector2.zero;
+    private List<Vector2> externalForces = new List<Vector2>();
 
 
     //FSM Components
@@ -106,6 +111,7 @@ public class PlayerController : MonoBehaviour, IHitable
     public Vector2 GravityValue { get => gravityValue; set => gravityValue = value; }
     public Vector2 MovementValue { get => movementValue; set => movementValue = value; }
     public Vector2 JumpValue { get => jumpValue; set => jumpValue = value; }
+    public List<Vector2> ExternalForces { get => externalForces; set => externalForces = value; }
     public float PlayerSpeed { get => playerSpeed; set => playerSpeed = value; }
     public bool CanDash { get => dashManager.CanDash; }
     public bool NeedNewDashPressed { get => dashManager.NeedNewDashPressed; set => dashManager.NeedNewDashPressed = value; }
@@ -116,6 +122,9 @@ public class PlayerController : MonoBehaviour, IHitable
     public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
     public PlayerSpecialManager SpecialManager { get => specialManager; set => specialManager = value; }
     public PlayerHealthManager HealthManager { get => healthManager; set => healthManager = value; }
+    public bool IsStunned { get => isStunned; set => isStunned = value; }
+    public bool IsDowned { get => isDowned; set => isDowned = value; }
+    public float StunTimer { get => stunTimer; set => stunTimer = value; }
 
 
     //Input events
@@ -219,7 +228,13 @@ public class PlayerController : MonoBehaviour, IHitable
         currentState.UpdateStates();
         Debug.Log(currentState);
         //Movement 
-        gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue; //TODO : use movement computation
+        Vector2 externalForce = Vector2.zero;
+        foreach(Vector2 force in externalForces)
+        {
+            externalForce += force;
+        }
+        gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue + externalForce; //TODO : use movement computation
+        externalForces.Clear();
     }
 
     private void LateUpdate()
@@ -228,8 +243,10 @@ public class PlayerController : MonoBehaviour, IHitable
         playerHUDManager.UpdateUI();
     }
 
-    public void Hit()
+    public void Hit(float stunTime, bool downed)
     {
-        throw new System.NotImplementedException();
+        isStunned = true;
+        stunTimer = stunTime;
+        isDowned = downed;
     }
 }

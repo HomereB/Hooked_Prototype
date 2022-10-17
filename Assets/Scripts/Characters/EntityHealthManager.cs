@@ -6,10 +6,12 @@ public abstract class EntityHealthManager : MonoBehaviour, IDamageable
 {
     protected float currentHealth;
     protected CharacterHealthData characterHealthData;
-    [SerializeField]
+    private bool isVulnerable;
+    private Coroutine invulerabilityCoroutine;
 
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public float HealthPercentage{ get => currentHealth / characterHealthData.maxHealth; }
+    protected bool IsVulnerable { get => isVulnerable; set => isVulnerable = value; }
 
     public virtual void AddToCurrentHealth(int value)
     {
@@ -21,10 +23,34 @@ public abstract class EntityHealthManager : MonoBehaviour, IDamageable
     {
         characterHealthData = healthData;
         currentHealth = healthData.maxHealth;
+        isVulnerable = true;
     }
 
     public virtual void Damage(int value)
     {
-        currentHealth -= value;
+        if(isVulnerable)
+            currentHealth -= value;
+    }
+
+    public virtual void StartInvulnerability()
+    {
+        StopInvulnerability();
+        invulerabilityCoroutine = StartCoroutine("InvulnerabilityCoroutine");
+    }
+
+    public virtual void StopInvulnerability()
+    {
+        if (invulerabilityCoroutine != null)
+            StopCoroutine(invulerabilityCoroutine);
+        IsVulnerable = true;
+    }
+
+    public virtual IEnumerator InvulnerabilityCoroutine()
+    {
+        isVulnerable = false;
+        Debug.Log("invu");
+        yield return new WaitForSeconds(characterHealthData.invulnerabilityTime);
+        Debug.Log("notInvu");
+        isVulnerable = true;
     }
 }

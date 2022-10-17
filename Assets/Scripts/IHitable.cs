@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHitable
 {
-    public void Hit();
+    public void Hit(float stunTime,bool downed);
 }

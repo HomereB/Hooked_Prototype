@@ -8,4 +8,5 @@ public class CharacterHealthData : ScriptableObject
 {
     [SerializeField]
     public float maxHealth;
+    public float invulnerabilityTime;
 }

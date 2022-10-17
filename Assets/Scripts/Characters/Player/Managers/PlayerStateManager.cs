@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class PlayerStateManager
 {
+    
+
     PlayerController context;
     Dictionary<string,PlayerBaseState> states = new Dictionary<string, PlayerBaseState>();
 

@@ -14,26 +14,27 @@ public class PlayerDownedState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        Context.PlayerAnimator.SetTrigger("isDowned");
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        if(Context.IsGrounded && Context.MovementInput != Vector2.zero || Context.IsJumpPressed)
+        {
+            Context.IsDowned = false;
+        }
     }
 }

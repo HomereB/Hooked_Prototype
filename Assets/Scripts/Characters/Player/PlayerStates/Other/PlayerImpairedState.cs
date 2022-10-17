@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerImpairedState : PlayerBaseState
+public class PlayerImpairedState : PlayerBaseState, IRootState
 {
     public PlayerImpairedState() : base()
     {
@@ -16,26 +14,59 @@ public class PlayerImpairedState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+        if(!Context.IsStunned && !Context.IsDowned)
+        {
+            if (Context.IsJumpPressed)
+            {
+                SwitchState(Manager.GetState<PlayerJumpState>());
+            }
+            else if(Context.IsGrounded)
+            {
+                SwitchState(Manager.GetState<PlayerGroundedState>());
+            }
+            else
+            {
+                SwitchState(Manager.GetState<PlayerFallState>());
+            }
+        }
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        Context.MovementValue = Vector2.zero;
+        Context.JumpValue = Vector2.zero;
+        Context.PlayerAnimator.SetTrigger("isHit");
+        ComputeGravity();
+        InitializeSubState();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
+        Context.PlayerAnimator.SetTrigger("recoverFromHit");
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
+        if(Context.IsStunned)
+        {
+            SetSubState(Manager.GetState<PlayerHitStunState>());
+        }
+        else if(Context.IsDowned)
+        {
+            SetSubState(Manager.GetState<PlayerDownedState>());
+        }
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        CheckSwitchState();
+    }
+
+    public void ComputeGravity()
+    {
+        if (Context.IsStunned)
+            Context.GravityValue = Vector2.zero;
+        else
+            Context.GravityValue = Context.playerGravityData.gravity;
     }
 }

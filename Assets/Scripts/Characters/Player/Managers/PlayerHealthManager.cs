@@ -30,12 +30,17 @@ public class PlayerHealthManager : EntityHealthManager
 
     public override void Damage(int value)
     {
-        base.Damage(value);
-        currentHealthRegainable = value;
-        if(regainableHealthCoroutine != null)
-            StopCoroutine(regainableHealthCoroutine);
-        regainableHealthCoroutine = StartCoroutine("RegainableHealthCoroutine");
+        if(IsVulnerable)
+        {
+            base.Damage(value);
+            currentHealthRegainable = value;
+            if(regainableHealthCoroutine != null)
+                StopCoroutine(regainableHealthCoroutine);
+            regainableHealthCoroutine = StartCoroutine("RegainableHealthCoroutine");
+        }
     }
+
+
 
     private IEnumerator RegainableHealthCoroutine()
     {      
@@ -47,7 +52,6 @@ public class PlayerHealthManager : EntityHealthManager
             else
                 currentHealthRegainable = 0;
             yield return new WaitForSeconds(0.02f);
-            Debug.Log("blub");
         }      
     }
 }

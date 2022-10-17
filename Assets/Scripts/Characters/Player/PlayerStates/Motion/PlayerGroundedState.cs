@@ -14,7 +14,9 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if (Context.IsHookPressed && Context.HookManager.CanStartHook)
+        if (Context.IsStunned || Context.IsDowned)
+            SwitchState(Manager.GetState<PlayerImpairedState>());
+        else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsJumpPressed && Context.CanJump)
             SwitchState(Manager.GetState<PlayerJumpState>());
@@ -28,9 +30,9 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     {
         Context.CurrentJumpAmount = 0;
         Context.JumpValue = Vector2.zero;
+        Context.PlayerAnimator.SetBool("isGrounded", true);
         ComputeGravity();
         InitializeSubState();
-        Context.PlayerAnimator.SetBool("isGrounded", true);
     }
 
     public override void ExitState()

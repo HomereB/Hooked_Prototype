@@ -6,34 +6,51 @@ public class PlayerHitStunState : PlayerBaseState
 {
     public PlayerHitStunState() : base()
     {
+
     }
 
     public PlayerHitStunState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
+
     }
 
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+        if(!Context.IsStunned)
+        {
+            if (Context.IsDowned)
+                SwitchState(Manager.GetState<PlayerDownedState>());
+            /*else
+                SwitchState(Manager.GetState<PlayerImpairedState>());*/
+        }
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("StunEnter");
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("StunExit");
+        Context.StunTimer = 0;
+        Context.HealthManager.StartInvulnerability();
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("blib");
+        Context.MovementValue = Vector2.zero;
+        Context.JumpValue = Vector2.zero;
+
+        Context.StunTimer -= Time.deltaTime;
+        if(Context.StunTimer < 0)
+            Context.IsStunned = false;
+
+        CheckSwitchState();
     }
 }

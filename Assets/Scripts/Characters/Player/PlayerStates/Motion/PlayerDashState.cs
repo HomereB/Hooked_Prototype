@@ -13,7 +13,9 @@ public class PlayerDashState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(Context.DashManager.CurrentDashTime > Context.playerDashData.maxDashTime || (Context.DashManager.CurrentDashTime > Context.playerDashData.minDashTime && !Context.IsDashPressed))
+        if (Context.IsStunned || Context.IsDowned)
+            SwitchState(Manager.GetState<PlayerImpairedState>());
+        else if (Context.DashManager.CurrentDashTime > Context.playerDashData.maxDashTime || (Context.DashManager.CurrentDashTime > Context.playerDashData.minDashTime && !Context.IsDashPressed))
         {
             if(Context.IsGrounded)
             {
