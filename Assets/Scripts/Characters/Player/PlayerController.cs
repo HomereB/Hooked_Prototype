@@ -46,6 +46,7 @@ public class PlayerController : EntityController, IHitable
     private bool isStunned = false; //TODO? : move in stun effect
     private float stunTimer = 0f;
     private bool isDowned = false;
+    private Vector2 ejectionValue = Vector2.zero;
     
     
     //Player Input Map
@@ -125,6 +126,7 @@ public class PlayerController : EntityController, IHitable
     public bool IsStunned { get => isStunned; set => isStunned = value; }
     public bool IsDowned { get => isDowned; set => isDowned = value; }
     public float StunTimer { get => stunTimer; set => stunTimer = value; }
+    public Vector2 EjectionValue { get => ejectionValue; set => ejectionValue = value; }
 
 
     //Input events
@@ -234,6 +236,7 @@ public class PlayerController : EntityController, IHitable
             externalForce += force;
         }
         gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue + externalForce; //TODO : use movement computation
+        Debug.Log(gravityValue);
         externalForces.Clear();
     }
 
@@ -243,10 +246,12 @@ public class PlayerController : EntityController, IHitable
         playerHUDManager.UpdateUI();
     }
 
-    public void Hit(float stunTime, bool downed)
+    public void Hit(float stunTime, bool downed, Vector2 ejectionForce)
     {
-        isStunned = true;
+        if (isDowned == false && stunTime > 0)
+            isStunned = true;
         stunTimer = stunTime;
         isDowned = downed;
+        ejectionValue = ejectionForce;
     }
 }

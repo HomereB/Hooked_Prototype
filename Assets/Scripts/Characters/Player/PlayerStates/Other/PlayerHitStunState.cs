@@ -27,12 +27,10 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("StunEnter");
     }
 
     public override void ExitState()
     {
-        Debug.Log("StunExit");
         Context.StunTimer = 0;
         Context.HealthManager.StartInvulnerability();
     }
@@ -43,7 +41,6 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void UpdateState()
     {
-        Debug.Log("blib");
         Context.MovementValue = Vector2.zero;
         Context.JumpValue = Vector2.zero;
 

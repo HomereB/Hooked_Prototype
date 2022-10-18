@@ -48,9 +48,7 @@ public abstract class EntityHealthManager : MonoBehaviour, IDamageable
     public virtual IEnumerator InvulnerabilityCoroutine()
     {
         isVulnerable = false;
-        Debug.Log("invu");
         yield return new WaitForSeconds(characterHealthData.invulnerabilityTime);
-        Debug.Log("notInvu");
         isVulnerable = true;
     }
 }

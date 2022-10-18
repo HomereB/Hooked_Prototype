@@ -2178,7 +2178,7 @@ GameObject:
   - component: {fileID: 1599514630}
   - component: {fileID: 1599514629}
   - component: {fileID: 1599514628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HealZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2375,7 +2375,7 @@ GameObject:
   - component: {fileID: 1674938042}
   - component: {fileID: 1674938041}
   - component: {fileID: 1674938040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DamageZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3141,7 +3141,7 @@ GameObject:
   - component: {fileID: 1885445197}
   - component: {fileID: 1885445196}
   - component: {fileID: 1885445195}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3161,7 +3161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downing: 1
-  stunTime: 0.2
+  stunTime: 0.05
 --- !u!61 &1885445196
 BoxCollider2D:
   m_ObjectHideFlags: 0

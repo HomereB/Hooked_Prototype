@@ -10,6 +10,6 @@ public class TestHit : MonoBehaviour
     {
         IHitable hitable = collision.gameObject.GetComponent<IHitable>();
         if (hitable != null)
-            hitable.Hit(0.5f,true);
+            hitable.Hit(stunTime, true, Vector2.up * 10f + Vector2.right * 4f);
     }
 }

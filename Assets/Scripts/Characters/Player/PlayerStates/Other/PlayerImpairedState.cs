@@ -67,6 +67,6 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
         if (Context.IsStunned)
             Context.GravityValue = Vector2.zero;
         else
-            Context.GravityValue = Context.playerGravityData.gravity;
+            Context.GravityValue = Context.playerGravityData.baseVelocity;
     }
 }

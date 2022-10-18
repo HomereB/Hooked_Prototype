@@ -19,11 +19,13 @@ public class PlayerDownedState : PlayerBaseState
 
     public override void EnterState()
     {
+
         Context.PlayerAnimator.SetTrigger("isDowned");
     }
 
     public override void ExitState()
     {
+        Context.EjectionValue = Vector2.zero;
     }
 
     public override void InitializeSubState()
@@ -32,7 +34,9 @@ public class PlayerDownedState : PlayerBaseState
 
     public override void UpdateState()
     {
-        if(Context.IsGrounded && Context.MovementInput != Vector2.zero || Context.IsJumpPressed)
+        Context.GravityValue += Context.playerGravityData.gravity * Context.playerGravityData.gravityScale;
+        Context.ExternalForces.Add(Context.EjectionValue);
+        if (Context.IsGrounded && Context.MovementInput != Vector2.zero || Context.IsJumpPressed)
         {
             Context.IsDowned = false;
         }
