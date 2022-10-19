@@ -4,23 +4,46 @@ using UnityEngine;
 
 public class StunEffect : StatusEffect
 {
-    public override void ApplyEffect()
+    public override void ApplyEffect(StatusEffectManager manager)
     {
-        throw new System.NotImplementedException();
+        base.ApplyEffect(manager);
+        Debug.Log(entityController.IsDowned);
+        if (entityController.IsDowned == false)
+        {
+            currentStatusDuration = EffectData.maxEffectDuration;
+            entityController.IsStunned = true;
+            Debug.Log("STUNNED");
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     public override void HandleEffect()
     {
-        throw new System.NotImplementedException();
+        //Debug.Log("handleEffect : " + currentStatusDuration);
+
+        currentStatusDuration -= Time.deltaTime;
+        if(currentStatusDuration <= 0)
+        {
+            effectManager.RemoveEffect(this);
+        }
     }
 
     public override void RemoveEffect()
     {
-        throw new System.NotImplementedException();
+        currentStatusDuration = 0;
+        entityController.IsStunned = false;
+        Destroy(this);
     }
 
     public override void StackEffect(StatusEffect effect)
     {
-        throw new System.NotImplementedException();
+        if (currentStatusDuration < effect.EffectData.maxEffectDuration && entityController.IsDowned == false)
+        {
+            currentStatusDuration = effectData.maxEffectDuration;
+        }
+        Destroy(effect);
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : EntityController, IHitable
+public class PlayerController : EntityController
 {
     //Base Motion
     [SerializeField]
@@ -14,7 +15,6 @@ public class PlayerController : EntityController, IHitable
     private PlayerDashManager dashManager;
     private PlayerHookManager hookManager;
     private PlayerSpecialManager specialManager;
-    private PlayerHealthManager healthManager;
     [SerializeField]
     private HUDManager playerHUDManager;
 
@@ -43,9 +43,9 @@ public class PlayerController : EntityController, IHitable
     private bool isGrabPressed = false;
     private bool isHookPressed = false;
     private bool isSpecialPressed = false;
-    private bool isStunned = false; //TODO? : move in stun effect
-    private float stunTimer = 0f;
-    private bool isDowned = false;
+
+
+    //Status //TODO? : move in respective status
     private Vector2 ejectionValue = Vector2.zero;
     
     
@@ -87,6 +87,10 @@ public class PlayerController : EntityController, IHitable
     private Animator playerAnimator;
 
 
+    //RigidBody
+    private Rigidbody2D rb;
+
+
     //Get & Set (TODO : sort a bit...)
     public PlayerBaseState CurrentState { get => currentState; set => currentState = value; }
     public bool IsJumpPressed { get => isJumpPressed; set => isJumpPressed = value; }
@@ -122,10 +126,7 @@ public class PlayerController : EntityController, IHitable
     public Animator PlayerAnimator { get => playerAnimator; set => playerAnimator = value; }
     public PlayerHookManager HookManager { get => hookManager; set => hookManager = value; }
     public PlayerSpecialManager SpecialManager { get => specialManager; set => specialManager = value; }
-    public PlayerHealthManager HealthManager { get => healthManager; set => healthManager = value; }
-    public bool IsStunned { get => isStunned; set => isStunned = value; }
-    public bool IsDowned { get => isDowned; set => isDowned = value; }
-    public float StunTimer { get => stunTimer; set => stunTimer = value; }
+
     public Vector2 EjectionValue { get => ejectionValue; set => ejectionValue = value; }
 
 
@@ -187,17 +188,18 @@ public class PlayerController : EntityController, IHitable
         dashManager.NeedNewDashPressed = false;
     }
 
-
     void Awake()
     {
         //Instantiate & Get
+        rb = gameObject.GetComponent<Rigidbody2D>();
+
         groundChecker2D = gameObject.GetComponent<GroundChecker2D>();
         wallChecker2D = gameObject.GetComponent<WallChecker2D>();
 
         healthManager = gameObject.AddComponent<PlayerHealthManager>();
         dashManager = gameObject.AddComponent<PlayerDashManager>();
         specialManager = gameObject.AddComponent<PlayerSpecialManager>();
-
+        statusEffectManager = gameObject.AddComponent<StatusEffectManager>();
         hookManager = gameObject.GetComponentInChildren<PlayerHookManager>();
         playerCrosshair = gameObject.GetComponentInChildren<PlayerCrosshair>();
         
@@ -209,10 +211,8 @@ public class PlayerController : EntityController, IHitable
         dashManager.PlayerDashManagerSetup(playerDashData, this);
         hookManager.PlayerHookManagerSetup(playerHookData, this);
         specialManager.PlayerSpecialManagerSetup(playerSpecialData, this);
-        //Debug.Log(healthManager);
         healthManager.SetupHealthManager(playerHealthData, this);
-
-
+        statusEffectManager.Context = this;
         currentState = playerStates.GetState<PlayerGroundedState>();
         currentState.EnterState();
 
@@ -228,16 +228,9 @@ public class PlayerController : EntityController, IHitable
     {
         //FSM logic
         currentState.UpdateStates();
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         //Movement 
-        Vector2 externalForce = Vector2.zero;
-        foreach(Vector2 force in externalForces)
-        {
-            externalForce += force;
-        }
-        gameObject.GetComponent<Rigidbody2D>().velocity = jumpValue + movementValue + gravityValue + externalForce; //TODO : use movement computation
-        Debug.Log(gravityValue);
-        externalForces.Clear();
+        ComputeMovement();
     }
 
     private void LateUpdate()
@@ -246,11 +239,19 @@ public class PlayerController : EntityController, IHitable
         playerHUDManager.UpdateUI();
     }
 
-    public void Hit(float stunTime, bool downed, Vector2 ejectionForce)
+    private void ComputeMovement() //TODO? : use movement computation script
     {
-        if (isDowned == false && stunTime > 0)
-            isStunned = true;
-        stunTimer = stunTime;
+        Vector2 externalForce = Vector2.zero;
+        foreach (Vector2 force in externalForces)
+        {
+            externalForce += force;
+        }
+        rb.velocity = jumpValue + movementValue + gravityValue + externalForce; 
+        externalForces.Clear();
+    }
+
+    public override void Hit(bool downed, Vector2 ejectionForce)
+    {
         isDowned = downed;
         ejectionValue = ejectionForce;
     }

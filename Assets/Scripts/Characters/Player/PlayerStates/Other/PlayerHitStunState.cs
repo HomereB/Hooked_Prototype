@@ -31,7 +31,6 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void ExitState()
     {
-        Context.StunTimer = 0;
         Context.HealthManager.StartInvulnerability();
     }
 
@@ -43,11 +42,6 @@ public class PlayerHitStunState : PlayerBaseState
     {
         Context.MovementValue = Vector2.zero;
         Context.JumpValue = Vector2.zero;
-
-        Context.StunTimer -= Time.deltaTime;
-        if(Context.StunTimer < 0)
-            Context.IsStunned = false;
-
         CheckSwitchState();
     }
 }

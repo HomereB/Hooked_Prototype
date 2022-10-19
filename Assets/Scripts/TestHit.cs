@@ -5,11 +5,18 @@ using UnityEngine;
 public class TestHit : MonoBehaviour
 {
     public bool downing;
-    public float stunTime;
+    public EffectData stunData;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IHitable hitable = collision.gameObject.GetComponent<IHitable>();
-        if (hitable != null)
-            hitable.Hit(stunTime, true, Vector2.up * 10f + Vector2.right * 4f);
+        PlayerController controller = collision.gameObject.GetComponent<PlayerController>();
+        if (controller != null)
+        {   
+            StunEffect stun = controller.gameObject.AddComponent<StunEffect>();
+            stun.EffectData = stunData;
+            controller.StatusEffectManager.AddEffect(stun);
+            Debug.Log("nik");
+            controller.Hit(true, Vector2.up * 10f + Vector2.right * 4f);
+        }
     }
 }

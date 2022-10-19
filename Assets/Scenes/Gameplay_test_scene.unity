@@ -3161,7 +3161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downing: 1
-  stunTime: 0.05
+  stunTime: 3
+  stunData: {fileID: 11400000, guid: 59d1df9a69e80b04bb99a337fc1337db, type: 2}
 --- !u!61 &1885445196
 BoxCollider2D:
   m_ObjectHideFlags: 0

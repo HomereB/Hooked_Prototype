@@ -6,35 +6,58 @@ using UnityEngine;
 public class StatusEffectManager : MonoBehaviour
 {
     PlayerController context;
-    public List<StatusEffect> statusEffects = new List<StatusEffect>();
+    public Dictionary<string,StatusEffect> statusEffects;
+    private List<string> statusToRemove;
+    public PlayerController Context { get => context; set => context = value; }
 
-    public StatusEffectManager(PlayerController currentContext)
+    private void Start()
     {
-        context = currentContext;
+        statusEffects = new Dictionary<string,StatusEffect>();
+        statusToRemove = new List<string>();
+
     }
 
-    void Update()
+void Update()
     {
-        foreach (StatusEffect effect in statusEffects)
-        {
-            effect.HandleEffect();
-        }
+        foreach(KeyValuePair<string, StatusEffect> effect in statusEffects)
+            effect.Value.HandleEffect();
+        RemoveObsoleteEffects();
     }
 
     public void AddEffect(StatusEffect effect)
     {
-        if(statusEffects.Contains(effect))
+        string key = effect.EffectData.effectKey;
+        if (!statusEffects.ContainsKey(key))
         {
-            statusEffects[statusEffects.IndexOf(effect)].StackEffect(effect);
+            effect.ApplyEffect(this);
+            statusEffects.Add(key,effect);      
         }
         else
         {
-            statusEffects.Add(effect);
+            statusEffects[key].StackEffect(effect);
         }
     }
 
     public void RemoveEffect(StatusEffect effect)
     {
-        statusEffects.Remove(effect);
+        statusToRemove.Add(effect.EffectData.effectKey);
+    }
+
+    private void RemoveObsoleteEffects()
+    {
+        foreach(string key in statusToRemove)
+        {
+            statusEffects[key].RemoveEffect();
+            statusEffects.Remove(key);
+        }
+        statusToRemove.Clear();
+    }
+
+    public void RemoveAllEffects()
+    {
+        foreach (KeyValuePair<string, StatusEffect> effect in statusEffects)
+            effect.Value.RemoveEffect();
+        statusEffects.Clear();
+        statusToRemove.Clear();
     }
 }

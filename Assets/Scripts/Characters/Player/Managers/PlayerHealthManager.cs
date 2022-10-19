@@ -40,8 +40,6 @@ public class PlayerHealthManager : EntityHealthManager
         }
     }
 
-
-
     private IEnumerator RegainableHealthCoroutine()
     {      
         yield return new WaitForSeconds(playerController.playerHealthData.regainableHealthTimeLossBegin);

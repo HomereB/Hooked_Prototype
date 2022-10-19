@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "StunData", menuName = "ScriptableObjects/Effect/Stun", order = 0)]
 public class EffectData : ScriptableObject
 {
-    public float effectDuration;
-    public float currentEffectDuration;
+    public string effectKey;
+    public float maxEffectDuration;
     public float intensity;
 }
