@@ -15,7 +15,6 @@ public class TestHit : MonoBehaviour
             StunEffect stun = controller.gameObject.AddComponent<StunEffect>();
             stun.EffectData = stunData;
             controller.StatusEffectManager.AddEffect(stun);
-            Debug.Log("nik");
             controller.Hit(true, Vector2.up * 10f + Vector2.right * 4f);
         }
     }

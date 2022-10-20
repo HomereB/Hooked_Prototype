@@ -7,12 +7,10 @@ public class StunEffect : StatusEffect
     public override void ApplyEffect(StatusEffectManager manager)
     {
         base.ApplyEffect(manager);
-        Debug.Log(entityController.IsDowned);
         if (entityController.IsDowned == false)
         {
             currentStatusDuration = EffectData.maxEffectDuration;
             entityController.IsStunned = true;
-            Debug.Log("STUNNED");
         }
         else
         {

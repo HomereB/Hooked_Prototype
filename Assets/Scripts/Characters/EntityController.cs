@@ -7,7 +7,7 @@ public class EntityController : MonoBehaviour, IHitable
     protected PlayerHealthManager healthManager;
     protected StatusEffectManager statusEffectManager;
     [SerializeField]
-    protected bool isStunned = false;
+    protected bool isStunned = false; //TODO?: move to Status Manager directly?
     [SerializeField]
     protected bool isDowned = false;
 
