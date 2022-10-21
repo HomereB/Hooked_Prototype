@@ -7,10 +7,10 @@ public class StunEffect : StatusEffect
     public override void ApplyEffect(StatusEffectManager manager)
     {
         base.ApplyEffect(manager);
-        if (entityController.IsDowned == false)
+        if (entityController.StatusEffectManager.IsDowned == false)
         {
             currentStatusDuration = EffectData.maxEffectDuration;
-            entityController.IsStunned = true;
+            entityController.StatusEffectManager.IsStunned = true;
         }
         else
         {
@@ -20,8 +20,6 @@ public class StunEffect : StatusEffect
 
     public override void HandleEffect()
     {
-        //Debug.Log("handleEffect : " + currentStatusDuration);
-
         currentStatusDuration -= Time.deltaTime;
         if(currentStatusDuration <= 0)
         {
@@ -32,13 +30,13 @@ public class StunEffect : StatusEffect
     public override void RemoveEffect()
     {
         currentStatusDuration = 0;
-        entityController.IsStunned = false;
+        entityController.StatusEffectManager.IsStunned = false;
         Destroy(this);
     }
 
     public override void StackEffect(StatusEffect effect)
     {
-        if (currentStatusDuration < effect.EffectData.maxEffectDuration && entityController.IsDowned == false)
+        if (currentStatusDuration < effect.EffectData.maxEffectDuration && entityController.StatusEffectManager.IsDowned == false)
         {
             currentStatusDuration = effectData.maxEffectDuration;
         }

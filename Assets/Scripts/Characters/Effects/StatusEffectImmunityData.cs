@@ -7,4 +7,5 @@ using UnityEngine;
 public class StatusEffectImmunityData : ScriptableObject
 {
     public bool isStunImmune;
+    public bool isDownedImmune;
 }

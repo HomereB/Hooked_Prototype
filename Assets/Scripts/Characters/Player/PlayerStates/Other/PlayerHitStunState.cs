@@ -16,9 +16,9 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if(!Context.IsStunned)
+        if(!Context.StatusEffectManager.IsStunned)
         {
-            if (Context.IsDowned)
+            if (Context.StatusEffectManager.IsDowned)
                 SwitchState(Manager.GetState<PlayerDownedState>());
             /*else
                 SwitchState(Manager.GetState<PlayerImpairedState>());*/

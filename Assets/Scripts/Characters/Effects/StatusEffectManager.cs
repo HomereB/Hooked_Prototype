@@ -6,9 +6,15 @@ using UnityEngine;
 public class StatusEffectManager : MonoBehaviour
 {
     PlayerController context;
+
+    protected bool isStunned = false;
+    protected bool isDowned = false;
+
     public Dictionary<string,StatusEffect> statusEffects;
     private List<string> statusToRemove;
     public PlayerController Context { get => context; set => context = value; }
+    public bool IsStunned { get => isStunned; set => isStunned = value; }
+    public bool IsDowned { get => isDowned; set => isDowned = value; }
 
     private void Start()
     {

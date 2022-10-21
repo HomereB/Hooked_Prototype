@@ -252,7 +252,7 @@ public class PlayerController : EntityController
 
     public override void Hit(bool downed, Vector2 ejectionForce)
     {
-        isDowned = downed;
+        statusEffectManager.IsDowned = downed;
         ejectionValue = ejectionForce;
     }
 }

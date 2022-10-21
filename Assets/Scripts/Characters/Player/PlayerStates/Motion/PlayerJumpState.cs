@@ -14,7 +14,7 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(Context.IsStunned || Context.IsDowned)
+        if(Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
             SwitchState(Manager.GetState<PlayerImpairedState>());
         else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
             SwitchState(Manager.GetState<PlayerHookStartupState>());

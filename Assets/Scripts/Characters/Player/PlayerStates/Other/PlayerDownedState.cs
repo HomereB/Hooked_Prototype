@@ -38,7 +38,7 @@ public class PlayerDownedState : PlayerBaseState
         Context.ExternalForces.Add(Context.EjectionValue);
         if (Context.IsGrounded && Context.MovementInput != Vector2.zero || Context.IsJumpPressed)
         {
-            Context.IsDowned = false;
+            Context.StatusEffectManager.IsDowned = false;
         }
     }
 }

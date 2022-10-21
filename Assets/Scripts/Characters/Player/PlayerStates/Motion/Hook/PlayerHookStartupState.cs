@@ -17,7 +17,7 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if (Context.IsStunned || Context.IsDowned)
+        if (Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
             SwitchState(Manager.GetState<PlayerImpairedState>());
         else if (Context.HookManager.hookStatus == HookStatus.Travel)
         {
@@ -60,7 +60,7 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
         {
             Context.HookManager.CurrentTravelTimer += Time.deltaTime;
             float speed = Context.playerHookData.maxHookDistance / Context.playerHookData.travelTime;
-            Context.HookManager.transform.position += Context.HookManager.HookDirection * speed * Time.deltaTime;
+            Context.HookManager.transform.position += speed * Time.deltaTime * Context.HookManager.HookDirection;
         }
         else
         {
