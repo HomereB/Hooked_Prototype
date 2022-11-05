@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerJumpState : PlayerBaseState, IRootState
+public class PlayerWallJumpState : PlayerBaseState, IRootState
 {
-    public PlayerJumpState() : base()
+    public PlayerWallJumpState() : base()
     {
         IsRootState = true;
     }
 
-    public PlayerJumpState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
+    public PlayerWallJumpState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
         IsRootState = true;
     }
@@ -20,7 +20,7 @@ public class PlayerJumpState : PlayerBaseState, IRootState
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
-        else if (Context.CurrentJumpTime > Context.playerJumpData.maxJumpTime || !Context.IsJumpPressed)
+        else if (Context.CurrentJumpTime > Context.playerWallJumpData.maxJumpTime || !Context.IsJumpPressed)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
             SwitchState(Manager.GetState<PlayerDashState>());
@@ -30,7 +30,12 @@ public class PlayerJumpState : PlayerBaseState, IRootState
     {
         InitializeSubState();
         ComputeGravity();
-        Context.JumpValue = Context.playerJumpData.initialJumpVelocity;
+
+        if (Context.IsAgainstWallRight)
+            Context.JumpValue = new Vector2(Context.playerWallJumpData.initialJumpVelocity.x * -1, Context.playerWallJumpData.initialJumpVelocity.y);
+        else
+            Context.JumpValue = Context.playerWallJumpData.initialJumpVelocity;
+
         Jump();
         Context.PlayerAnimator.SetBool("isJumping", true);
         Context.PlayerAnimator.SetInteger("JumpAmount", Context.CurrentJumpAmount);
@@ -66,10 +71,10 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     void Jump()
     {
-        Context.JumpValue -= Context.playerJumpData.speedDecreaseRate;
-        if (Context.JumpValue.y <= Context.playerJumpData.minJumpVelocity)
+        Context.JumpValue -= Context.playerWallJumpData.speedDecreaseRate;
+        if (Context.JumpValue.y <= Context.playerWallJumpData.minJumpVelocity)
         {
-            Context.JumpValue = new Vector2(Context.JumpValue.x, Context.playerJumpData.minJumpVelocity);
+            Context.JumpValue = new Vector2(Context.JumpValue.x, Context.playerWallJumpData.minJumpVelocity);
         }
     }
 

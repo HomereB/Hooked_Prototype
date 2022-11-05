@@ -2818,6 +2818,7 @@ MonoBehaviour:
   wallChecker2D: {fileID: 1739562226}
   playerHealthData: {fileID: 11400000, guid: 9505406e9982b8e4ab1f57ef929c19e8, type: 2}
   playerJumpData: {fileID: 11400000, guid: b71b2647300d3ac4aa8a0a4e8c1c7d68, type: 2}
+  playerWallJumpData: {fileID: 11400000, guid: a479f9572dcb7cf47b363f746fa84d6f, type: 2}
   playerGravityData: {fileID: 11400000, guid: 62690ee044611164d91ff43896dba774, type: 2}
   playerDashData: {fileID: 11400000, guid: 18cb03c118971e549954580bc7bf6f34, type: 2}
   playerHookData: {fileID: 11400000, guid: f9564dd74ddda98468f0489fff7eb1f4, type: 2}
@@ -3161,7 +3162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downing: 1
-  stunTime: 3
   stunData: {fileID: 11400000, guid: 59d1df9a69e80b04bb99a337fc1337db, type: 2}
 --- !u!61 &1885445196
 BoxCollider2D:

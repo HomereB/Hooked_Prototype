@@ -65,6 +65,7 @@ public class PlayerController : EntityController
     //Data from Scriptable objects
     public PlayerHealthData playerHealthData;
     public PlayerJumpData playerJumpData;
+    public PlayerJumpData playerWallJumpData;
     public PlayerGravityData playerGravityData;
     public PlayerDashData playerDashData;
     public PlayerHookData playerHookData;

@@ -23,6 +23,8 @@ public class PlayerFallState : PlayerBaseState, IRootState
         }
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
+        else if (Context.IsJumpPressed && Context.IsAgainstWall && Context.CanJump)
+            SwitchState(Manager.GetState<PlayerWallJumpState>());
         else if (Context.IsJumpPressed && Context.CanJump)
             SwitchState(Manager.GetState<PlayerJumpState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
