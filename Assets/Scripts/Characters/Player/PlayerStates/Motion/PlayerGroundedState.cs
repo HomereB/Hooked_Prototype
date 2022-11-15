@@ -19,7 +19,12 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
         else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsJumpPressed && Context.CanJump)
-            SwitchState(Manager.GetState<PlayerJumpState>());
+        {
+            if (Context.IsAgainstWall)
+                SwitchState(Manager.GetState<PlayerWallRidingState>());
+            else
+                SwitchState(Manager.GetState<PlayerJumpState>());
+        }
         else if (!Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)

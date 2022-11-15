@@ -22,10 +22,10 @@ public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(hasGravity)
+        if (hasGravity)
         {
             currentVelocity += gravity * gravityScale * Time.deltaTime;
-            if(Mathf.Abs(currentVelocity.x) > Mathf.Abs(maximumVelocity.x))
+            if (Mathf.Abs(currentVelocity.x) > Mathf.Abs(maximumVelocity.x))
             {
                 currentVelocity.x = maximumVelocity.x;
             }
