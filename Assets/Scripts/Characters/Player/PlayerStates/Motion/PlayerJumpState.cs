@@ -75,6 +75,6 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

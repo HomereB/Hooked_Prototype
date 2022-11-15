@@ -19,16 +19,11 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
         else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsJumpPressed && Context.CanJump)
-        {
-            if (Context.IsAgainstWall)
-                SwitchState(Manager.GetState<PlayerWallRidingState>());
-            else
-                SwitchState(Manager.GetState<PlayerJumpState>());
-        }
+            SwitchState(Manager.GetState<PlayerJumpState>());
         else if (!Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-            SwitchState(Manager.GetState<PlayerDashState>());        
+            SwitchState(Manager.GetState<PlayerDashState>());
     }
 
     public override void EnterState()
@@ -61,9 +56,9 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     {
         CheckSwitchState();
     }
-    
+
     public void ComputeGravity()
     {
-        Context.GravityValue = Context.playerGravityData.groundedGravity;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

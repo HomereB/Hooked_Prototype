@@ -32,9 +32,9 @@ public class PlayerHookTravelState : PlayerBaseState, IRootState
     public override void EnterState()
     {
     }
-    
 
-    public override void ExitState() 
+
+    public override void ExitState()
     {
         Context.HookManager.EndHook(Context.playerHookData.hookCooldown);
         if (Context.IsHookPressed)
@@ -45,7 +45,7 @@ public class PlayerHookTravelState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        if (Vector3.Distance(Context.HookManager.HitPosition,Context.Position) > Context.playerHookData.cutoffDistance)
+        if (Vector3.Distance(Context.HookManager.HitPosition, Context.Position) > Context.playerHookData.cutoffDistance)
         {
             Vector2 movementDirection = new Vector2(Context.HookManager.HookDirection.x, Context.HookManager.HookDirection.y);
             Context.MovementValue = movementDirection * Context.playerHookData.playerTravelSpeed * Time.deltaTime;
@@ -59,6 +59,6 @@ public class PlayerHookTravelState : PlayerBaseState, IRootState
 
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

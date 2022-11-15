@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IMovementComponent 
 {
-    public Vector3 GetValue();
+    public Vector2 GetValue();
 }

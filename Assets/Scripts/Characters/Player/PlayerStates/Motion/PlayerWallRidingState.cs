@@ -20,8 +20,8 @@ public class PlayerWallRidingState : PlayerBaseState, IRootState
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
-        //else if (Context.CurrentJumpTime > Context.playerWallJumpData.maxJumpTime || !Context.IsJumpPressed)
-        //    SwitchState(Manager.GetState<PlayerFallState>());
+        else if (!Context.IsAgainstWall)
+            SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
             SwitchState(Manager.GetState<PlayerDashState>());
     }
@@ -47,19 +47,23 @@ public class PlayerWallRidingState : PlayerBaseState, IRootState
 
     public override void InitializeSubState()
     {
-        
+        if (Context.IsMovementPressed)
+        {
+            SetSubState(Manager.GetState<PlayerRunState>());
+        }
+        else
+        {
+            SetSubState(Manager.GetState<PlayerIdleState>());
+        }
     }
 
     public override void UpdateState()
     {
-        var gravity = new Vector2(0.0f, -0.5f);
-        var gravityScale = 0.35f;
-        Context.GravityValue += gravity * gravityScale; //TODO: Switch to SO
         CheckSwitchState();
     }
 
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(Context.playerWallRidingData);
     }
 }

@@ -68,7 +68,7 @@ public class DashBehaviour : MonoBehaviour, IDashBehaviour
         isDashing = true;
     }    
     
-    public Vector3 GetValue()
+    public Vector2 GetValue()
     {
         return currentDashValue;
     }

@@ -98,7 +98,7 @@ public class JumpBehaviour : MonoBehaviour, IJumpBehaviour
         return currentJumpAmount;
     }
 
-    public Vector3 GetValue()
+    public Vector2 GetValue()
     {
         return JumpValue;
     }

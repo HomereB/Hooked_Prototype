@@ -19,7 +19,7 @@ public class PlayerAttackState : PlayerBaseState,IRootState
 
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 
     public override void EnterState()

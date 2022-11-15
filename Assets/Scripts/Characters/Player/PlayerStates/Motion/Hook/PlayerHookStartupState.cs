@@ -73,6 +73,7 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
     
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
+        //Context.GravityValue = Vector2.zero;
     }
 }

@@ -58,11 +58,10 @@ public class PlayerFallState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        Context.GravityValue += Context.playerGravityData.gravity * Context.playerGravityData.gravityScale;
         CheckSwitchState();
     }
     public void ComputeGravity()
     {
-        Context.GravityValue = Context.playerGravityData.baseVelocity;
+        Context.GravityBehaviour.ActivateGravity(Context.playerGravityData);
     }  
 }

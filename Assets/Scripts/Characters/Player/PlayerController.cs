@@ -67,16 +67,19 @@ public class PlayerController : EntityController
     public PlayerJumpData playerJumpData;
     public PlayerJumpData playerWallJumpData;
     public PlayerGravityData playerGravityData;
+    public PlayerGravityData playerWallRidingData;
     public PlayerDashData playerDashData;
     public PlayerHookData playerHookData;
     public PlayerSpecialData playerSpecialData;
 
 
     //Movement computation elements
-    private Vector2 gravityValue = Vector2.zero;
     private Vector2 movementValue = Vector2.zero;
     private Vector2 jumpValue = Vector2.zero;
     private List<Vector2> externalForces = new List<Vector2>();
+
+    //Behaviour components
+    private IGravityBehaviour gravityBehaviour;
 
 
     //FSM Components
@@ -114,7 +117,7 @@ public class PlayerController : EntityController
     public bool IsAgainstWallLeft { get => wallChecker2D.IsAgainstWallLeft; }
     public bool IsAgainstWallRight { get => wallChecker2D.IsAgainstWallRight; }
     public bool IsAgainstWall { get => wallChecker2D.IsAgainstWallLeft || wallChecker2D.IsAgainstWallRight; }
-    public Vector2 GravityValue { get => gravityValue; set => gravityValue = value; }
+    public IGravityBehaviour GravityBehaviour { get => gravityBehaviour; }
     public Vector2 MovementValue { get => movementValue; set => movementValue = value; }
     public Vector2 JumpValue { get => jumpValue; set => jumpValue = value; }
     public List<Vector2> ExternalForces { get => externalForces; set => externalForces = value; }
@@ -206,6 +209,8 @@ public class PlayerController : EntityController
         
         playerAnimator = gameObject.GetComponent<Animator>();
 
+        gravityBehaviour = gameObject.GetComponent<IGravityBehaviour>();
+
         playerStates = new PlayerStateManager(this);
 
         //Setup & Init
@@ -247,7 +252,7 @@ public class PlayerController : EntityController
         {
             externalForce += force;
         }
-        rb.velocity = jumpValue + movementValue + gravityValue + externalForce; 
+        rb.velocity = jumpValue + movementValue + gravityBehaviour.GetValue() + externalForce; 
         externalForces.Clear();
     }
 
