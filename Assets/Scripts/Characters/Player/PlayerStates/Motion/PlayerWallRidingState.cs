@@ -20,6 +20,8 @@ public class PlayerWallRidingState : PlayerBaseState, IRootState
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
+        else if (Context.IsJumpPressed && Context.CanJump)
+            SwitchState(Manager.GetState<PlayerJumpState>());
         else if (!Context.IsAgainstWall)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
@@ -31,18 +33,12 @@ public class PlayerWallRidingState : PlayerBaseState, IRootState
         InitializeSubState();
         ComputeGravity();
 
-        //if (Context.IsAgainstWallRight)
-        //    Context.JumpValue = new Vector2(Context.playerWallJumpData.initialJumpVelocity.x * -1, Context.playerWallJumpData.initialJumpVelocity.y);
-        //else
-        //    Context.JumpValue = Context.playerWallJumpData.initialJumpVelocity;
-
-        //Jump();
-        //Context.PlayerAnimator.SetBool("isJumping", true);
+        //Context.PlayerAnimator.SetBool("isWallRiding", true);
     }
 
     public override void ExitState()
     {
-        //Context.PlayerAnimator.SetBool("isJumping", false);
+        //Context.PlayerAnimator.SetBool("isWallRiding", false);
     }
 
     public override void InitializeSubState()

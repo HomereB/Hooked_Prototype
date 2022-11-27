@@ -29,7 +29,7 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         Context.CurrentJumpAmount = 0;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         Context.PlayerAnimator.SetBool("isGrounded", true);
         ComputeGravity();
         InitializeSubState();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class PlayerStateManager
 {
     PlayerController context;
-    Dictionary<string,PlayerBaseState> states = new Dictionary<string, PlayerBaseState>();
+    Dictionary<string, PlayerBaseState> states = new Dictionary<string, PlayerBaseState>();
 
     public PlayerStateManager(PlayerController currentContext)
     {
@@ -15,8 +15,8 @@ public class PlayerStateManager
     {
         string className = typeof(T).Name;
         bool alreadyCreated = states.ContainsKey(className);
-        T resultState = alreadyCreated ? states[className] as T: new T();
-        if(!alreadyCreated)
+        T resultState = alreadyCreated ? states[className] as T : new T();
+        if (!alreadyCreated)
         {
             resultState.SetupState(context, this);
         }

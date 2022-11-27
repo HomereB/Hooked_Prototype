@@ -4,10 +4,8 @@ using UnityEngine;
 
 public interface IJumpBehaviour : IMovementComponent
 {
-    void Jump();
-    void NextJump();
-    void StopJump();
-    void ResetJump();
-    void AddJumpToCount();
-    int GetJumpCount();
+    bool IsJumpFinished { get; }
+    float ScaleX { get; set; }
+
+    void ActivateJump(PlayerJumpData data);
 }

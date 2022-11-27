@@ -27,8 +27,6 @@ public class PlayerController : EntityController
     //Jump //TODO : move logic in a jump behaviour
     [SerializeField]
     private int currentJumpAmount = 0;
-    [SerializeField]
-    private float currentJumpTime = 0;
     private bool needNewJumpPressed = false;
 
 
@@ -75,11 +73,11 @@ public class PlayerController : EntityController
 
     //Movement computation elements
     private Vector2 movementValue = Vector2.zero;
-    private Vector2 jumpValue = Vector2.zero;
     private List<Vector2> externalForces = new List<Vector2>();
 
     //Behaviour components
     private IGravityBehaviour gravityBehaviour;
+    private IJumpBehaviour jumpBehaviour;
 
 
     //FSM Components
@@ -106,9 +104,8 @@ public class PlayerController : EntityController
     public bool IsHookPressed { get => isHookPressed; set => isHookPressed = value; }
     public bool IsSpecialPressed { get => isSpecialPressed; set => isSpecialPressed = value; }
     public int CurrentJumpAmount { get => currentJumpAmount; set => currentJumpAmount = value; }
-    public float CurrentJumpTime { get => currentJumpTime; set => currentJumpTime = value; }
     public bool NeedNewJumpPressed { get => needNewJumpPressed; set => needNewJumpPressed = value; }
-    public bool CanJump { get => (currentJumpAmount < playerJumpData.maxJumpAmount && !needNewJumpPressed) ? true : false; }
+    public bool CanJump { get => currentJumpAmount < playerJumpData.maxJumpAmount && !needNewJumpPressed; }
     public bool IsMovementPressed { get => movementInput != Vector2.zero ? true : false; }
     public Vector2 MovementInput { get => movementInput; set => movementInput = value; }
     public bool IsCameraMovementPressed { get => cameraInput != Vector2.zero ? true : false; }
@@ -118,8 +115,8 @@ public class PlayerController : EntityController
     public bool IsAgainstWallRight { get => wallChecker2D.IsAgainstWallRight; }
     public bool IsAgainstWall { get => wallChecker2D.IsAgainstWallLeft || wallChecker2D.IsAgainstWallRight; }
     public IGravityBehaviour GravityBehaviour { get => gravityBehaviour; }
+    public IJumpBehaviour JumpBehaviour { get => jumpBehaviour; }
     public Vector2 MovementValue { get => movementValue; set => movementValue = value; }
-    public Vector2 JumpValue { get => jumpValue; set => jumpValue = value; }
     public List<Vector2> ExternalForces { get => externalForces; set => externalForces = value; }
     public float PlayerSpeed { get => playerSpeed; set => playerSpeed = value; }
     public bool CanDash { get => dashManager.CanDash; }
@@ -209,7 +206,9 @@ public class PlayerController : EntityController
         
         playerAnimator = gameObject.GetComponent<Animator>();
 
+        //Behaviour assignation
         gravityBehaviour = gameObject.GetComponent<IGravityBehaviour>();
+        jumpBehaviour = gameObject.GetComponent<IJumpBehaviour>();
 
         playerStates = new PlayerStateManager(this);
 
@@ -223,11 +222,6 @@ public class PlayerController : EntityController
         currentState.EnterState();
 
         playerHUDManager.PlayerController = this;
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -252,7 +246,7 @@ public class PlayerController : EntityController
         {
             externalForce += force;
         }
-        rb.velocity = jumpValue + movementValue + gravityBehaviour.GetValue() + externalForce; 
+        rb.velocity = jumpBehaviour.GetValue() + movementValue + gravityBehaviour.GetValue() + externalForce; 
         externalForces.Clear();
     }
 

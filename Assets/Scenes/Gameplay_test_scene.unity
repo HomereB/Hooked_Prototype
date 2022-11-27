@@ -2654,6 +2654,7 @@ GameObject:
   - component: {fileID: 1739562226}
   - component: {fileID: 1739562223}
   - component: {fileID: 1739562224}
+  - component: {fileID: 1739562225}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -2813,7 +2814,6 @@ MonoBehaviour:
   playerHUDManager: {fileID: 1956814214}
   playerCrosshair: {fileID: 0}
   currentJumpAmount: 0
-  currentJumpTime: 0
   playerInput: {fileID: 1739562221}
   groundChecker2D: {fileID: 1739562215}
   wallChecker2D: {fileID: 1739562226}
@@ -3007,6 +3007,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityData: {fileID: 0}
+--- !u!114 &1739562225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739562214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e100bbbb6415fd40965b1965dbc9d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpData: {fileID: 0}
 --- !u!114 &1739562226
 MonoBehaviour:
   m_ObjectHideFlags: 0

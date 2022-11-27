@@ -37,7 +37,7 @@ public class PlayerFallState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         InitializeSubState();
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         Context.CurrentJumpAmount++;
         ComputeGravity();
     }

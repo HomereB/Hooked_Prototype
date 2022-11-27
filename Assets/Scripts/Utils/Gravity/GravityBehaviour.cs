@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
@@ -17,7 +15,7 @@ public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentVelocity = gravityData != null ? gravityData.baseVelocity : new Vector2(0, 0f);
+        currentVelocity = gravityData != null ? gravityData.baseVelocity : Vector2.zero;
     }
 
     // Update is called once per frame

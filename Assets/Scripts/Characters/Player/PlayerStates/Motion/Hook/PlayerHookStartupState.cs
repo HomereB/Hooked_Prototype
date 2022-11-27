@@ -40,9 +40,10 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         Context.HookManager.InitializeHookThrow();
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
+        Context.GravityBehaviour.ActivateGravity(null);
+
         Context.MovementValue = Vector2.zero;
-        ComputeGravity();
     }
 
     public override void ExitState() 
@@ -66,14 +67,11 @@ public class PlayerHookStartupState : PlayerBaseState, IRootState
         {
             Context.HookManager.hookStatus = HookStatus.Cooldown;
         }
-        Context.JumpValue = Vector2.zero;
         Context.MovementValue = Vector2.zero;
         CheckSwitchState();
     }
     
     public void ComputeGravity()
     {
-        Context.GravityBehaviour.ActivateGravity(null);
-        //Context.GravityValue = Vector2.zero;
     }
 }

@@ -16,7 +16,7 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if(!Context.StatusEffectManager.IsStunned)
+        if (!Context.StatusEffectManager.IsStunned)
         {
             if (Context.StatusEffectManager.IsDowned)
                 SwitchState(Manager.GetState<PlayerDownedState>());
@@ -27,6 +27,7 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void EnterState()
     {
+        Context.JumpBehaviour.ActivateJump(null); //TODO : Both ? 
     }
 
     public override void ExitState()
@@ -41,7 +42,7 @@ public class PlayerHitStunState : PlayerBaseState
     public override void UpdateState()
     {
         Context.MovementValue = Vector2.zero;
-        Context.JumpValue = Vector2.zero;
+
         CheckSwitchState();
     }
 }

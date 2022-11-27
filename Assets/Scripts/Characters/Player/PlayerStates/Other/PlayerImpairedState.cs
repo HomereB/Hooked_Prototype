@@ -34,7 +34,7 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         Context.MovementValue = Vector2.zero;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         Context.PlayerAnimator.SetTrigger("isHit");
         ComputeGravity();
         InitializeSubState();

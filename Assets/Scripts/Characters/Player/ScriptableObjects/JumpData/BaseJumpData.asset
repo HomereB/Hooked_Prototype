@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BaseJumpData
   m_EditorClassIdentifier: 
   initialJumpVelocity: {x: 0, y: 20}
-  minJumpVelocity: 2
+  minJumpVelocity: {x: 0, y: 0.3}
   speedDecreaseRate: {x: 0, y: 0.6}
   maxJumpAmount: 2
   maxJumpTime: 0.5

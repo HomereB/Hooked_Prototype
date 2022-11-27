@@ -32,7 +32,7 @@ public class PlayerDashState : PlayerBaseState, IRootState
     {
         Context.DashManager.DashDirection = Context.MovementInput;
         Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         ComputeGravity();
         Context.PlayerAnimator.SetBool("isDashing", true);
     }
