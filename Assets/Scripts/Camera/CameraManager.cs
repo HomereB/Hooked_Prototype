@@ -8,7 +8,7 @@ public  class CameraManager : MonoBehaviour
     public Camera currentCamera;
 
     [SerializeField]
-    public static CameraController currentCameraController;
+    public CameraController currentCameraController;
 
     private void Awake()
     {
@@ -35,5 +35,10 @@ public  class CameraManager : MonoBehaviour
         currentCamera.enabled = true;
         currentCameraController.enabled = true;
         //TODO : add effect transfer from one camera to another
+    }
+
+    public void SwitchCameraAnchor(CameraAnchor anchor)
+    {
+        currentCameraController.CurrentAnchor = anchor;
     }
 }
