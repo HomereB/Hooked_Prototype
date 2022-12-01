@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public  class CameraManager : MonoBehaviour
 {
     [SerializeField]
-    Camera currentCamera;
+    public Camera currentCamera;
 
     [SerializeField]
-    CameraController currentCameraController;
-
-
-
-
+    public static CameraController currentCameraController;
 
     private void Awake()
     {

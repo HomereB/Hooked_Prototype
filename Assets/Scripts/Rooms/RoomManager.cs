@@ -7,10 +7,12 @@ public class RoomManager : MonoBehaviour
 {
     private CameraAnchor cameraAnchor;
     private bool isCleared = false;
+
+    private CameraController cameraController;
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraController = GameObject.FindObjectOfType<CameraController>(); //TODO : No
     }
 
     // Update is called once per frame
@@ -21,10 +23,11 @@ public class RoomManager : MonoBehaviour
 
     public void EnterRoom()
     {
-        if(isCleared)
+        if(!isCleared)
         {
             InitializeRoom();
         }
+
     }
 
     private void InitializeRoom()
