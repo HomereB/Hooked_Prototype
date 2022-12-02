@@ -38,14 +38,7 @@ public class CameraFreeMovementState : CameraBaseState
 
     public override void InitializeSubState()
     {
-        if(Context.CurrentTarget != null)
-        {
-            SetSubState(Manager.GetState<CameraTargetingState>());
-        }
-        else
-        {
-            SetSubState(Manager.GetState<CameraFreeLookingState>());
-        }
+
     }
 
     public override void UpdateState()
