@@ -6,12 +6,10 @@ public class CameraAnchoredState : CameraBaseState
 {
     public CameraAnchoredState() : base()
     {
-        IsRootState = true;
     }
 
     public CameraAnchoredState(CameraController currentContext, CameraStateManager currentManager) : base(currentContext, currentManager)
     {
-        IsRootState = true;
     }
     public override void CheckSwitchState()
     {
@@ -27,7 +25,6 @@ public class CameraAnchoredState : CameraBaseState
 
     public override void EnterState()
     {
-        InitializeSubState();
     }
 
     public override void ExitState()
@@ -35,15 +32,10 @@ public class CameraAnchoredState : CameraBaseState
 
     }
 
-    public override void InitializeSubState()
-    {
-
-    }
-
     public override void UpdateState()
     {
-        Context.CurrentAnchor.ComputeAnchorMovement(Context.MovementInput);
-        //Context.FollowAnchor();
+        Context.FollowAnchor();
+        Context.CurrentAnchor.ComputeAnchorMovement();
         CheckSwitchState();
     }
 }

@@ -75,10 +75,10 @@ public class CameraController : MonoBehaviour
         currentState.EnterState();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Debug.Log(currentState);
-        currentState.UpdateStates();
+        currentState.UpdateState();
     }
 
     private void LateUpdate()

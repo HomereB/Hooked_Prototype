@@ -231,6 +231,7 @@ public class PlayerController : EntityController
         //Debug.Log(currentState);
         //Movement 
         ComputeMovement();
+        ComputeCameraOffset();
     }
 
     private void LateUpdate()
@@ -248,6 +249,12 @@ public class PlayerController : EntityController
         }
         rb.velocity = jumpValue + movementValue + gravityValue + externalForce; 
         externalForces.Clear();
+    }
+
+    public void ComputeCameraOffset()
+    {
+        Vector3 offset = cameraInput / 2 + movementInput * 2.5f;//TODO : create variables
+        GameManager.Instance.CameraManager.currentCameraController.CurrentAnchor.AddCameraMovementInput(offset); 
     }
 
     public override void Hit(bool downed, Vector2 ejectionForce)

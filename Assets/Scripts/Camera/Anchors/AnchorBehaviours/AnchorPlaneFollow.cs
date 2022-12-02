@@ -10,7 +10,7 @@ public class AnchorPlaneFollow : CameraAnchor
     private GameObject target;
 
     [SerializeField]
-    private Vector3 offset;
+    private Vector3 offset; // TODO? : useful?
 
     [SerializeField]
     private Vector2 anchorBoundsX;
@@ -19,7 +19,15 @@ public class AnchorPlaneFollow : CameraAnchor
     [SerializeField]
     private Vector2 anchorBoundsZ;
 
+    private List<Vector3> cameraMovementInputs;
+
     public GameObject Target { get => target; set => target = value; }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        AnchorSetup();
+    }
 
     public void FollowTarget()
     {
@@ -29,12 +37,6 @@ public class AnchorPlaneFollow : CameraAnchor
     public override void SetAnchorPosition(Vector3 position)
     {
         desiredPosition = position;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        AnchorSetup();
     }
 
     private void BoundDesiredPosition(ref Vector3 currentPosition)
@@ -58,22 +60,37 @@ public class AnchorPlaneFollow : CameraAnchor
     {
         desiredPosition = transform.position;
         ComputeBounds();
+        cameraMovementInputs = new List<Vector3>();
     }
 
     private void ComputeBounds()
     {
-
+        //TODO : automation
     }
 
-    public override void ComputeAnchorMovement(Vector3 input)
+    public override void AddCameraMovementInput(Vector3 input)
+    {
+        cameraMovementInputs.Add(input);
+    }
+
+    public override void ComputeAnchorMovement()
     {
         if (Target != null)
-            FollowTarget();
+            FollowTarget(); //TODO? : necessary or just position?
 
-        Vector3 currentPosition = Vector3.Lerp(transform.position, desiredPosition, anchorData.lerpIntensity);
+        Vector3 input = Vector3.zero;
+
+        foreach(Vector3 movement in cameraMovementInputs)
+        {
+            input += movement;
+        }
+        Debug.Log(input);
+        Vector3 currentPosition = Vector3.Lerp(transform.position, desiredPosition + input, anchorData.lerpIntensity);
 
         BoundDesiredPosition(ref currentPosition);
 
         transform.position = currentPosition;       
+        
+        cameraMovementInputs.Clear();
     }
 }

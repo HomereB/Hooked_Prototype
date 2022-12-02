@@ -16,6 +16,8 @@ public  class CameraManager : MonoBehaviour
         currentCameraController = currentCamera.gameObject.GetComponent<CameraController>();
     }
 
+
+
     private void Update()
     {
 

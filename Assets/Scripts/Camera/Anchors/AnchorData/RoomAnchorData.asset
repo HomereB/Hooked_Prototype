@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RoomAnchorData
   m_EditorClassIdentifier: 
   initialSpeed: 0
-  lerpIntensity: 0.95
+  lerpIntensity: 0.1
   minPos: {x: 0, y: 0, z: 0}
   maxPos: {x: 0, y: 0, z: 0}

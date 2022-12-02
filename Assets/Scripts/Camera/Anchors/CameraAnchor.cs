@@ -7,6 +7,7 @@ public abstract class CameraAnchor : MonoBehaviour
     public AnchorData anchorData;
 
     public abstract void AnchorSetup();
-    public abstract void ComputeAnchorMovement(Vector3 input);
+    public abstract void ComputeAnchorMovement();
+    public abstract void AddCameraMovementInput(Vector3 input);
     public abstract void SetAnchorPosition(Vector3 position);
 }

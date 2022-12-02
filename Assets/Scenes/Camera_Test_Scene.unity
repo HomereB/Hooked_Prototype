@@ -868,7 +868,6 @@ MonoBehaviour:
   cameraData: {fileID: 11400000, guid: 2c3d5cb8aa9bde64c82b76cace7b43b1, type: 2}
   currentCamera: {fileID: 319586261}
   currentAnchor: {fileID: 2075962471}
-  currentTarget: {fileID: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   currentOffset: {x: 0, y: 0, z: 0}
   currentRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -876,16 +875,6 @@ MonoBehaviour:
   currentSway: {x: 0, y: 0, z: 0, w: 0}
   isTraveling: 0
   movementInput: {x: 0, y: 0, z: 0}
-  rotationInput: {x: 0, y: 0, z: 0}
-  zoomInput: 0
-  testAnchor: {fileID: 0}
-  startpos: []
-  endpos: []
-  startrot: []
-  endrot: []
-  attached: 
-  time: []
-  waitingTime: []
 --- !u!1 &375107599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 468182670}
+  - component: {fileID: 468182671}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1142,6 +1132,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &468182671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468182669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d3d0ed9839e6049a6550bb241d394a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &475369815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44beaf9365155124bb8233da9370e39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCleared: 0
 --- !u!1 &638198605
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,6 +4451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44beaf9365155124bb8233da9370e39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCleared: 0
 --- !u!1 &2066970075
 GameObject:
   m_ObjectHideFlags: 0
