@@ -30,7 +30,7 @@ public class PlayerDashState : PlayerBaseState, IRootState
 
     public override void EnterState()
     {
-        Context.DashManager.DashDirection = Context.MovementInput;
+        Context.DashManager.DashDirection = Context.MovementInput.normalized;
         Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
         Context.JumpValue = Vector2.zero;
         ComputeGravity();

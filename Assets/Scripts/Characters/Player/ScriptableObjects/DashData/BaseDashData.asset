@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeacdf8eb2d53914780f32ea5c76dbef, type: 3}
   m_Name: BaseDashData
   m_EditorClassIdentifier: 
-  maxDashTime: 0.3
-  minDashTime: 0.15
+  maxDashTime: 0.25
+  minDashTime: 0.07
   dashSpeed: 30
   dashSpeedDecrease: 0
   dashCooldown: 3
