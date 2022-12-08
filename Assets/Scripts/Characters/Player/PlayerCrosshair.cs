@@ -17,6 +17,7 @@ public class PlayerCrosshair : MonoBehaviour
 
     public Vector2 Position { get => position; set => position = value; }
     public Vector2 Input { get => input; set => input = value; }
+    public float CrosshairDistance { get => crosshairDistance; set => crosshairDistance = value; }
 
     // Start is called before the first frame update
     void Start()

@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     Quaternion currentRotation;
 
     [SerializeField]
-    Vector3 currentDisplacement;
+    Vector3 currentDisplacement; //TODO : Check if needed
     [SerializeField]
     Quaternion currentSway;
     [SerializeField]
@@ -77,7 +77,6 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(currentState);
         currentState.UpdateState();
     }
 
@@ -86,8 +85,27 @@ public class CameraController : MonoBehaviour
         ComputeTransform();
     }
 
+    private void ComputeTransform()
+    {
+        currentCamera.transform.position = currentPosition + currentDisplacement;
+        currentCamera.transform.rotation = currentSway * currentRotation;
+        currentCamera.transform.position += currentOffset;
+        currentDisplacement = Vector3.zero;
+        currentSway = Quaternion.identity;
+    }
+    public void FollowAnchor()
+    {
+        if (currentAnchor != null)
+            currentPosition = currentAnchor.transform.position;
+    }
+    
+    public void TeleportCamera(Vector3 position, CameraAnchor cameraAnchor, Transform cameraTarget)
+    {
+        currentAnchor = cameraAnchor;
+        currentCamera.transform.position = position;
+    }
 
-    public void RotateCamera(Vector2 rotation)
+/*    public void RotateCamera(Vector2 rotation)
     {      
             Vector3 upVector = Vector3.up;
             if (currentAnchor != null)
@@ -106,23 +124,14 @@ public class CameraController : MonoBehaviour
             currentRotation = verticalRotation * horizontalRotation * currentRotation;
     }
 
-    public void MoveCamera(Vector3 movement)
-    {
-        currentPosition += movement * cameraData.standardCameraMovementSpeed * Time.deltaTime;
-    }
-
     public void ResetZoom()
     {
         currentOffset = Vector3.zero;
-    }
+    }*/
 
-    private void ComputeTransform()
+    public void MoveCamera(Vector3 movement)
     {
-        currentCamera.transform.position = currentPosition + currentDisplacement;
-        currentCamera.transform.rotation = currentSway * currentRotation;
-        currentCamera.transform.position += currentOffset;
-        currentDisplacement = Vector3.zero;
-        currentSway = Quaternion.identity;
+        currentPosition += movement * cameraData.standardCameraMovementSpeed * Time.deltaTime;
     }
 
     public void AttachToAnchor(CameraAnchor anchor, Vector3 offset, Quaternion rotationOnAttach, float travelTime)
@@ -134,22 +143,10 @@ public class CameraController : MonoBehaviour
         StartCoroutine(currentMovementCoroutine);
     }
 
-    public void FollowAnchor()
-    {
-        if (currentAnchor != null)
-            currentPosition = currentAnchor.transform.position;
-    }
-
     public void DetachFromAnchor()
     {
         currentAnchor = null;
         currentPosition = transform.position;
-    }
-
-    public void TeleportCamera(Vector3 position, CameraAnchor cameraAnchor, Transform cameraTarget)
-    {
-        currentAnchor = cameraAnchor;
-        currentCamera.transform.position = position;
     }
 
     private IEnumerator MoveCameraTo(Vector3 startPosition,Vector3 endPosition, Quaternion startRotation, Quaternion endRotation, CameraAnchor cameraAnchor, float time)

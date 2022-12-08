@@ -84,7 +84,6 @@ public class AnchorPlaneFollow : CameraAnchor
         {
             input += movement;
         }
-        Debug.Log(input);
         Vector3 currentPosition = Vector3.Lerp(transform.position, desiredPosition + input, anchorData.lerpIntensity);
 
         BoundDesiredPosition(ref currentPosition);

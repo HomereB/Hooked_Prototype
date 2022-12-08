@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public  class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [SerializeField]
     public Camera currentCamera;
@@ -15,8 +15,6 @@ public  class CameraManager : MonoBehaviour
         //currentCamera = Camera.main;
         currentCameraController = currentCamera.gameObject.GetComponent<CameraController>();
     }
-
-
 
     private void Update()
     {
@@ -39,7 +37,7 @@ public  class CameraManager : MonoBehaviour
         //TODO : add effect transfer from one camera to another
     }
 
-    public void SwitchCameraAnchor(CameraAnchor anchor)
+    public void SwitchCameraAnchor(CameraAnchor anchor) //TODO? : useful?
     {
         currentCameraController.CurrentAnchor = anchor;
     }
