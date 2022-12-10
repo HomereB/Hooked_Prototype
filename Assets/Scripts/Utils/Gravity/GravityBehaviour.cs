@@ -45,7 +45,13 @@ public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
         gravityData = data;
 
         if (data != null)
-            currentVelocity = data.baseVelocity;
+        {
+            if (currentVelocity.x < data.baseVelocity.x)
+                currentVelocity.x = data.baseVelocity.x;
+            
+            if (currentVelocity.y < data.baseVelocity.y)
+                currentVelocity.y = data.baseVelocity.y;
+        }
     }
 
     public Vector2 GetValue()

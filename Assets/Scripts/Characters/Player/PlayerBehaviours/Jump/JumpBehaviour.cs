@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpBehaviour : MonoBehaviour, IJumpBehaviour
@@ -71,8 +69,11 @@ public class JumpBehaviour : MonoBehaviour, IJumpBehaviour
 
         if (data != null)
         {
-            //TODO : Add check to compare with previous velocity and act in consideration
-            currentVelocity = data.initialJumpVelocity;
+            if (currentVelocity.x < data.initialJumpVelocity.x)
+                currentVelocity.x = data.initialJumpVelocity.x;
+
+            if (currentVelocity.y < data.initialJumpVelocity.y)
+                currentVelocity.y = data.initialJumpVelocity.y;
         }
     }
 }

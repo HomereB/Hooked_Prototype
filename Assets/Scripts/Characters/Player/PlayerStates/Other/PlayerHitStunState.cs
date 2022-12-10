@@ -27,7 +27,7 @@ public class PlayerHitStunState : PlayerBaseState
 
     public override void EnterState()
     {
-        Context.JumpBehaviour.ActivateJump(null); //TODO : Both ? 
+        Context.JumpBehaviour.ActivateJump(null);
     }
 
     public override void ExitState()
