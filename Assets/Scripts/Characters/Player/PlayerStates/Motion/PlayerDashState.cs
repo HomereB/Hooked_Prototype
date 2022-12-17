@@ -17,7 +17,7 @@ public class PlayerDashState : PlayerBaseState, IRootState
             SwitchState(Manager.GetState<PlayerImpairedState>());
         else if (Context.DashManager.CurrentDashTime > Context.playerDashData.maxDashTime || (Context.DashManager.CurrentDashTime > Context.playerDashData.minDashTime && !Context.IsDashPressed))
         {
-            if(Context.IsGrounded)
+            if (Context.IsGrounded)
             {
                 SwitchState(Manager.GetState<PlayerGroundedState>());
             }
@@ -32,9 +32,9 @@ public class PlayerDashState : PlayerBaseState, IRootState
     {
         Context.DashManager.DashDirection = Context.MovementInput;
         Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         ComputeGravity();
-        Context.PlayerAnimator.SetBool("isDashing",true);
+        Context.PlayerAnimator.SetBool("isDashing", true);
     }
 
     public override void ExitState()
@@ -46,20 +46,20 @@ public class PlayerDashState : PlayerBaseState, IRootState
             Context.NeedNewDashPressed = true;
     }
 
-    public override void InitializeSubState() {}
+    public override void InitializeSubState() { }
 
     public override void UpdateState()
     {
         Context.DashManager.CurrentDashTime += Time.deltaTime;
-        if(Context.DashManager.CurrentDashTime < Context.playerDashData.minDashTime || (Context.DashManager.CurrentDashTime < Context.playerDashData.maxDashTime && Context.IsDashPressed))
+        if (Context.DashManager.CurrentDashTime < Context.playerDashData.minDashTime || (Context.DashManager.CurrentDashTime < Context.playerDashData.maxDashTime && Context.IsDashPressed))
         {
             Context.MovementValue = Context.DashManager.DashDirection * Context.playerDashData.dashSpeed;
         }
-        CheckSwitchState();       
+        CheckSwitchState();
     }
-    
+
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

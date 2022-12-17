@@ -18,7 +18,7 @@ public class MoveBehaviour : MonoBehaviour, ICharacterMove
         currentVelocity = input;
     }
 
-    public Vector3 GetValue()
+    public Vector2 GetValue()
     {
         return currentVelocity;
     }

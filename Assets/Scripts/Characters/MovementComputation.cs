@@ -6,7 +6,7 @@ public class MovementComputation : MonoBehaviour
 {
     List<IMovementComponent> movementComponents;
     // Start is called before the first frame update
-    Vector3 movement;
+    Vector2 movement;
     Rigidbody2D rb;
 
     private void Awake()

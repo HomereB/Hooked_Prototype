@@ -1,37 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
 {
-    private bool hasGravity;
-    public Vector2 baseVelocity;
-    private Vector2 previousVelocity;
-    public Vector2 maximumVelocity;
-    [SerializeField]
+    private bool HasGravity
+    {
+        get => gravityData != null;
+    }
+
     private Vector2 currentVelocity;
-    public Vector2 gravity;
-    public float gravityScale;
+
+    [SerializeField]
+    private PlayerGravityData gravityData;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentVelocity = new Vector2(0, 0f);
+        currentVelocity = gravityData != null ? gravityData.baseVelocity : Vector2.zero;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(hasGravity)
+        if (HasGravity)
         {
-            currentVelocity += gravity * gravityScale * Time.deltaTime;
-            if(Mathf.Abs(currentVelocity.x) > Mathf.Abs(maximumVelocity.x))
+            currentVelocity += gravityData.gravityScale * Time.fixedDeltaTime * gravityData.gravity;
+
+            if (Mathf.Abs(currentVelocity.x) > Mathf.Abs(gravityData.maximumVelocity.x))
             {
-                currentVelocity.x = maximumVelocity.x;
+                currentVelocity.x = gravityData.maximumVelocity.x;
             }
-            if (Mathf.Abs(currentVelocity.y) > Mathf.Abs(maximumVelocity.y))
+            if (Mathf.Abs(currentVelocity.y) > Mathf.Abs(gravityData.maximumVelocity.y))
             {
-                currentVelocity.y = maximumVelocity.y;
+                currentVelocity.y = gravityData.maximumVelocity.y;
             }
         }
         else
@@ -40,19 +40,27 @@ public class GravityBehaviour : MonoBehaviour, IGravityBehaviour
         }
     }
 
-    public void ActivateGravity(bool activationStatus)
+    public void ActivateGravity(PlayerGravityData data)
     {
-        hasGravity = activationStatus;
+        gravityData = data;
+
+        if (data != null)
+        {
+            if (currentVelocity.x < data.baseVelocity.x)
+                currentVelocity.x = data.baseVelocity.x;
+            
+            if (currentVelocity.y < data.baseVelocity.y)
+                currentVelocity.y = data.baseVelocity.y;
+        }
     }
 
-    public Vector3 GetValue()
+    public Vector2 GetValue()
     {
         return currentVelocity;
     }
 
     private void ResetGravity()
     {
-        currentVelocity = baseVelocity;
-        previousVelocity = Vector3.zero;
+        currentVelocity = Vector2.zero;
     }
 }

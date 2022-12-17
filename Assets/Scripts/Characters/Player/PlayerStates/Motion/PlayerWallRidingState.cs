@@ -1,48 +1,45 @@
 using UnityEngine;
 
-public class PlayerFallState : PlayerBaseState, IRootState
+public class PlayerWallRidingState : PlayerBaseState, IRootState
 {
-    public PlayerFallState() : base()
+    public PlayerWallRidingState() : base()
     {
         IsRootState = true;
     }
 
-    public PlayerFallState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
+    public PlayerWallRidingState(PlayerController currentContext, PlayerStateManager currentManager) : base(currentContext, currentManager)
     {
         IsRootState = true;
     }
 
     public override void CheckSwitchState()
     {
-        if (Context.IsAgainstWall)
-            SwitchState(Manager.GetState<PlayerWallRidingState>());
-        else if (Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
+        if (Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
             SwitchState(Manager.GetState<PlayerImpairedState>());
         else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
-        {
             SwitchState(Manager.GetState<PlayerHookStartupState>());
-            Context.CurrentJumpAmount--;
-        }
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
         else if (Context.IsJumpPressed && Context.CanJump)
             SwitchState(Manager.GetState<PlayerJumpState>());
+        else if (!Context.IsAgainstWall)
+            SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-        {
             SwitchState(Manager.GetState<PlayerDashState>());
-            Context.CurrentJumpAmount--;
-        }
     }
 
     public override void EnterState()
     {
         InitializeSubState();
-        Context.JumpBehaviour.ActivateJump(null);
-        Context.CurrentJumpAmount++;
         ComputeGravity();
+
+        //Context.PlayerAnimator.SetBool("isWallRiding", true);
     }
 
-    public override void ExitState() { }
+    public override void ExitState()
+    {
+        //Context.PlayerAnimator.SetBool("isWallRiding", false);
+    }
 
     public override void InitializeSubState()
     {
@@ -60,8 +57,9 @@ public class PlayerFallState : PlayerBaseState, IRootState
     {
         CheckSwitchState();
     }
+
     public void ComputeGravity()
     {
-        Context.GravityBehaviour.ActivateGravity(Context.playerGravityData);
-    }  
+        Context.GravityBehaviour.ActivateGravity(Context.playerWallRidingData);
+    }
 }

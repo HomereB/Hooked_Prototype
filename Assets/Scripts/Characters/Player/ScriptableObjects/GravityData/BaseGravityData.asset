@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: BaseGravityData
   m_EditorClassIdentifier: 
   baseVelocity: {x: 0, y: 0}
-  maximumVelocity: {x: 0, y: -2}
-  gravity: {x: 0, y: -0.5}
+  maximumVelocity: {x: 0, y: -10}
+  gravity: {x: 0, y: -50}
   gravityScale: 1
-  groundedGravity: {x: 0, y: 0}

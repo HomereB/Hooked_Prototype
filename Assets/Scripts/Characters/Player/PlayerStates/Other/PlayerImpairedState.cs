@@ -14,13 +14,13 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(!Context.StatusEffectManager.IsStunned && !Context.StatusEffectManager.IsDowned)
+        if (!Context.StatusEffectManager.IsStunned && !Context.StatusEffectManager.IsDowned)
         {
             if (Context.IsJumpPressed)
             {
                 SwitchState(Manager.GetState<PlayerJumpState>());
             }
-            else if(Context.IsGrounded)
+            else if (Context.IsGrounded)
             {
                 SwitchState(Manager.GetState<PlayerGroundedState>());
             }
@@ -34,7 +34,7 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         Context.MovementValue = Vector2.zero;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         Context.PlayerAnimator.SetTrigger("isHit");
         ComputeGravity();
         InitializeSubState();
@@ -47,11 +47,11 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
 
     public override void InitializeSubState()
     {
-        if(Context.StatusEffectManager.IsStunned)
+        if (Context.StatusEffectManager.IsStunned)
         {
             SetSubState(Manager.GetState<PlayerHitStunState>());
         }
-        else if(Context.StatusEffectManager.IsDowned)
+        else if (Context.StatusEffectManager.IsDowned)
         {
             SetSubState(Manager.GetState<PlayerDownedState>());
         }
@@ -65,8 +65,8 @@ public class PlayerImpairedState : PlayerBaseState, IRootState
     public void ComputeGravity()
     {
         if (Context.StatusEffectManager.IsStunned)
-            Context.GravityValue = Vector2.zero;
+            Context.GravityBehaviour.ActivateGravity(null);
         else
-            Context.GravityValue = Context.playerGravityData.baseVelocity;
+            Context.GravityBehaviour.ActivateGravity(Context.playerGravityData);
     }
 }

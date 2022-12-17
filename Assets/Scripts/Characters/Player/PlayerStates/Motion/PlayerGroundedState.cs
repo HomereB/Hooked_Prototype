@@ -23,13 +23,13 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
         else if (!Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-            SwitchState(Manager.GetState<PlayerDashState>());        
+            SwitchState(Manager.GetState<PlayerDashState>());
     }
 
     public override void EnterState()
     {
         Context.CurrentJumpAmount = 0;
-        Context.JumpValue = Vector2.zero;
+        Context.JumpBehaviour.ActivateJump(null);
         Context.PlayerAnimator.SetBool("isGrounded", true);
         ComputeGravity();
         InitializeSubState();
@@ -56,9 +56,9 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
     {
         CheckSwitchState();
     }
-    
+
     public void ComputeGravity()
     {
-        Context.GravityValue = Context.playerGravityData.groundedGravity;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

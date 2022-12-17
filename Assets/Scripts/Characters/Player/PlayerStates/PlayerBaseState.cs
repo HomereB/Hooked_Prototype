@@ -12,9 +12,9 @@ public abstract class PlayerBaseState : BaseState
     protected PlayerController Context { get => context; set => context = value; }
     protected PlayerStateManager Manager { get => manager; set => manager = value; }
 
-    public PlayerBaseState() {}
+    public PlayerBaseState() { }
 
-    public PlayerBaseState(PlayerController currentContext,PlayerStateManager currentManager)
+    public PlayerBaseState(PlayerController currentContext, PlayerStateManager currentManager)
     {
         context = currentContext;
         manager = currentManager;
@@ -42,7 +42,7 @@ public abstract class PlayerBaseState : BaseState
 
     public abstract void CheckSwitchState();
     public abstract void InitializeSubState();
-    protected void SwitchState(PlayerBaseState newState) 
+    protected void SwitchState(PlayerBaseState newState)
     {
         ExitState();
         newState.EnterState();
@@ -55,12 +55,12 @@ public abstract class PlayerBaseState : BaseState
     {
         currentSuperState = newSuperState;
     }
-    protected void SetSubState(PlayerBaseState newSubState) 
+    protected void SetSubState(PlayerBaseState newSubState)
     {
         currentSubState = newSubState;
         currentSubState.SetSuperState(this);
     }
-    
+
     /*    public void ExitStates()
     {
         ExitState();

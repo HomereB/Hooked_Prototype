@@ -8,7 +8,7 @@ public class PlayerJumpData : ScriptableObject
     [SerializeField]
     public Vector2 initialJumpVelocity;
     [SerializeField]
-    public float minJumpVelocity;
+    public Vector2 minJumpVelocity;
     [SerializeField]
     public Vector2 speedDecreaseRate;
     [SerializeField]

@@ -14,31 +14,39 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     public override void CheckSwitchState()
     {
-        if(Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
+        if (Context.StatusEffectManager.IsStunned || Context.StatusEffectManager.IsDowned)
             SwitchState(Manager.GetState<PlayerImpairedState>());
         else if (Context.IsHookPressed && Context.HookManager.CanStartHook)
             SwitchState(Manager.GetState<PlayerHookStartupState>());
         else if (Context.IsGrounded)
             SwitchState(Manager.GetState<PlayerGroundedState>());
-        else if(Context.CurrentJumpTime > Context.playerJumpData.maxJumpTime || !Context.IsJumpPressed)
+        else if (Context.JumpBehaviour.IsJumpFinished || !Context.IsJumpPressed)
             SwitchState(Manager.GetState<PlayerFallState>());
         else if (Context.IsDashPressed && Context.IsMovementPressed && Context.CanDash)
-            SwitchState(Manager.GetState<PlayerDashState>());      
+            SwitchState(Manager.GetState<PlayerDashState>());
     }
 
     public override void EnterState()
     {
         InitializeSubState();
         ComputeGravity();
-        Context.JumpValue = Context.playerJumpData.initialJumpVelocity;
-        Jump();
+
+        if (Context.IsAgainstWall && !Context.IsGrounded)
+        {
+            if (Context.IsAgainstWallRight)
+                Context.JumpBehaviour.ScaleX = -1;
+
+            Context.JumpBehaviour.ActivateJump(Context.playerWallJumpData);
+        }
+        else
+            Context.JumpBehaviour.ActivateJump(Context.playerJumpData);
+
         Context.PlayerAnimator.SetBool("isJumping", true);
         Context.PlayerAnimator.SetInteger("JumpAmount", Context.CurrentJumpAmount);
     }
 
     public override void ExitState()
     {
-        Context.CurrentJumpTime = 0;
         Context.PlayerAnimator.SetBool("isJumping", false);
 
         if (Context.IsJumpPressed)
@@ -59,22 +67,11 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
-        Jump();
-        Context.CurrentJumpTime += Time.deltaTime;
         CheckSwitchState();
-    }
-
-    void Jump()
-    {    
-        Context.JumpValue -= Context.playerJumpData.speedDecreaseRate;
-        if (Context.JumpValue.y <= Context.playerJumpData.minJumpVelocity)
-        {
-            Context.JumpValue = new Vector2(Context.JumpValue.x, Context.playerJumpData.minJumpVelocity);
-        }
     }
 
     public void ComputeGravity()
     {
-        Context.GravityValue = Vector2.zero;
+        Context.GravityBehaviour.ActivateGravity(null);
     }
 }

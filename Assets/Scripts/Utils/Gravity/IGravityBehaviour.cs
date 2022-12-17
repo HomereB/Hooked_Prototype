@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IGravityBehaviour : IMovementComponent
 {
-    public void ActivateGravity(bool activationStatus);
-
+    void ActivateGravity(PlayerGravityData data);
 }
