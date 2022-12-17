@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeacdf8eb2d53914780f32ea5c76dbef, type: 3}
-  m_Name: BaseDashData
+  m_Script: {fileID: 11500000, guid: 759e9918201ced042b5497cba04f1080, type: 3}
+  m_Name: RoomAnchorData
   m_EditorClassIdentifier: 
-  maxDashTime: 0.25
-  minDashTime: 0.07
-  dashSpeed: 30
-  dashSpeedDecrease: 0
-  dashCooldown: 3
-  maxDashCharges: 2
+  initialSpeed: 0
+  lerpIntensity: 0.1
+  minPos: {x: 0, y: 0, z: 0}
+  maxPos: {x: 0, y: 0, z: 0}

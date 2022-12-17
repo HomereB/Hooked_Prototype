@@ -8,7 +8,10 @@ public class PlayerController : EntityController
     //Base Motion
     [SerializeField]
     private float playerSpeed = 2f; //TODO : use player motion data + move behaviour
-
+    [SerializeField]
+    private float cameraMovementMultiplicator = 1.5f;
+    [SerializeField]
+    private float cameraAimMultiplicator = .5f;
 
     //Managers
     //TODO : ComboManager
@@ -231,6 +234,7 @@ public class PlayerController : EntityController
         //Debug.Log(currentState);
         //Movement 
         ComputeMovement();
+        ComputeCameraOffset();
     }
 
     private void LateUpdate()
@@ -248,6 +252,15 @@ public class PlayerController : EntityController
         }
         rb.velocity = jumpBehaviour.GetValue() + movementValue + gravityBehaviour.GetValue() + externalForce; 
         externalForces.Clear();
+    }
+
+    public void ComputeCameraOffset()
+    {
+        Vector3 movementOffset = (cameraInput * playerCrosshair.CrosshairDistance * cameraAimMultiplicator);
+        Vector3 aimOffset = (movementInput * cameraMovementMultiplicator);
+        //TODO? : Reference to CameraController?
+        GameManager.Instance.CameraManager.currentCameraController.CurrentAnchor.AddCameraMovementInput(movementOffset); 
+        GameManager.Instance.CameraManager.currentCameraController.CurrentAnchor.AddCameraMovementInput(aimOffset); 
     }
 
     public override void Hit(bool downed, Vector2 ejectionForce)
